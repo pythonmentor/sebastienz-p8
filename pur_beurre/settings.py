@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'store.apps.StoreConfig',
+    'accounts.apps.AccountsConfig',
 ]
 
 MIDDLEWARE = [
@@ -51,6 +53,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.locale.LocaleMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'pur_beurre.urls'
@@ -81,7 +84,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql', # on utilise l'adaptateur postgresql
         'NAME': 'pur_beurre', # le nom de notre base de donnees creee precedemment
-        'USER': 'user', # attention : remplacez par votre nom d'utilisateur
+        'USER': 'sebastien', # attention : remplacez par votre nom d'utilisateur
         'PASSWORD': '',
         'HOST': '',
         'PORT': '5432',

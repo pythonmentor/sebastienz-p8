@@ -1,0 +1,35 @@
+#logo{
+    height: 60px;
+    margin-right: 2em;
+}
+
+.navbar{
+    /*border: solid 2px black;*/
+}
+
+.nav-link img{
+    height: 2em;
+}
+
+.zoom img{
+  transition: transform .2s; /* Animation */
+}
+
+.zoom img:hover {
+  transform: scale(2); /* (200% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+}
+
+.nav-item .btn{
+    margin-right: 2em;
+
+}
+
+.photos img{
+    height: 15em;
+    width: 15em;
+    border-radius: 2em;
+}
+
+label{
+    width: 15em;
+}

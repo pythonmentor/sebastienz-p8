@@ -1,0 +1,17 @@
+{% extends 'store/base.html' %}
+{% load static %}
+{% block title %}Création de compte{% endblock %}
+
+{% block header_title %}Création de compte{% endblock %}
+{% block header_content %}
+    <div class="col-md-4 offset-md-4 align-center text-left text-white">
+        <form action="#" method="post">
+        {% csrf_token %}
+        {{ register_form.as_p }}
+    	<input type="submit" value="Créer le compte"/>
+    	<a href= "../login">Se connecter</a>
+        </form>
+    </div>
+  </div>
+</header>
+{% endblock %}
