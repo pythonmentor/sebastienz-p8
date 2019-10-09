@@ -20,8 +20,9 @@ class RegisterForm(ModelForm):
     #email = forms.EmailField(label= "Adresse mail", max_length= 100)
     class Meta:
         model = Customer
-        fields = ['last_name', 'first_name', 'email', 'password']
+        fields = ['pseudo', 'last_name', 'first_name', 'email', 'password']
         widgets = {
+            'pseudo' : TextInput(attrs = {'class': 'form-control', 'placeholder': 'pseudo'}),
             'last_name' : TextInput(attrs = {'class': 'form-control', 'placeholder': 'nom'}),
             'first_name' : TextInput(attrs = {'class': 'form-control', 'placeholder': 'prénom'}),
             'email' : EmailInput(attrs = {'class': 'form-control', 'placeholder': 'email'}),

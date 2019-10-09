@@ -28,7 +28,9 @@
 
   // Collapse Navbar
   var navbarCollapse = function() {
-    if ($("#mainNav").offset().top > 100) {
+    var title = $(document).prop('title');
+    console.log(title);
+    if (($("#mainNav").offset().top > 100) || title!="Pur Beurre - Accueil") {
       $("#mainNav").addClass("navbar-scrolled");
     } else {
       $("#mainNav").removeClass("navbar-scrolled");
