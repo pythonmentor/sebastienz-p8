@@ -5,13 +5,12 @@
 {% block header_title %}Connection{% endblock %}
 {% block header_content %}
     <div class="col-md-4 offset-md-4 align-center text-left text-white">
-        <form action="#" method="post">
+        <form action="{% url 'accounts:login' %}" method="post">
         {% csrf_token %}
         {{ login_form.as_p }}
-    	<input type="submit" value="Se connecter"/>
-    	<a href= "../register">Créer un compte</a>
+        <br>
+    	<input type="submit" value="Se connecter"/><br><br>
+    	<span>Je n'ai pas de compte, je <a href= "{%  url 'accounts:register' %}">m'enregistre</a> !</span>
         </form>
     </div>
-  </div>
-</header>
 {% endblock %}

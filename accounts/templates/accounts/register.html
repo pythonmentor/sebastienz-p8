@@ -4,14 +4,23 @@
 
 {% block header_title %}Création de compte{% endblock %}
 {% block header_content %}
-    <div class="col-md-4 offset-md-4 align-center text-left text-white">
-        <form action="#" method="post">
+    <div class="col-sm-6 offset-sm-3 align-center text-left text-white ">
+        <form action="{% url 'accounts:register' %}" method="POST">
         {% csrf_token %}
-        {{ register_form.as_p }}
-    	<input type="submit" value="Créer un compte"/>
-    	<a href= "../login">Se connecter</a>
+        <p class="input-group">
+            {% for field in register_form %}
+                <p class="">{{ field.label_tag }}{{ field }}</p>
+                {% if field.help_text %}
+                    <span class="help_message">{{ field.help_text }}</span>
+                {% endif %}
+                {% if field.errors %}
+                    <span class="error_message">{{ field.errors }}</span>
+                {% endif %}
+            {% endfor %}
+        </p>
+        <br>
+    	<input type="submit" value="Créer un compte"/><br><br>
+    	<span>Je me <a href= "{% url 'accounts:login' %}">connecte</a> à mon compte existant !</span>
         </form>
     </div>
-  </div>
-</header>
 {% endblock %}
