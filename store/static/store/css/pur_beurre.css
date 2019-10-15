@@ -43,6 +43,10 @@ h1.text-uppercase{
     color: var(--courgetteclair);
 }
 
+#mainNav .btn p{
+    font-size: 0.7rem;
+}
+
 #mainNav .btn a{
     color: #fff;
 }
@@ -144,4 +148,25 @@ p.text-muted{
   content: "\e900";
 }
 
+
 /****************************************************************************/
+.help_message ul{
+    font-size: 11px;
+    color: var(--obergine);
+    list-style:none;
+    margin-left:0;
+    padding-left:0;
+}
+
+.error_message ul{
+    font-size: 11px;
+    color: var(--tomate);
+    list-style: none;
+    list-style:none;
+    margin-left:0;
+    padding-left:0;
+}
+
+.input-group-append label {
+
+}
