@@ -29,22 +29,6 @@ def user_login(request):
     login_form = LoginForm()
     return render(request, 'accounts/login.html', {'login_form': login_form})
 
-    # if request.method == 'POST':
-    #     login_form = LoginForm(request, request.POST)
-    #     if login_form.is_valid():
-    #         username = login_form.cleaned_data.get('username')
-    #         raw_password = login_form.cleaned_data.get('password1')
-    #         authenticate_user = authenticate(username=username, password=raw_password)
-    #         if authenticate_user is not None:
-    #             login(request, authenticate_user)
-    #         return HttpResponseRedirect('/')
-    #     else:
-    #         register_form = RegisterForm()
-    #         return render(request, 'accounts/login.html', {'login_form': login_form})
-    # else:
-    #     login_form = LoginForm()
-    #     return render(request, 'accounts/login.html', {'login_form': login_form})
-
 
 def user_logout(request):
     logout(request)
