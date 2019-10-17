@@ -7,10 +7,10 @@ from accounts import views as accounts_views
 
 def index(request):
     search_form = SearchForm()
-    logged_customer = accounts_views.get_logged_customer_from_request(request)
+
     context = {
         'search_form':search_form,
-        'logged_customer':logged_customer
+
     }
     return render(request, 'store/index.html', context)
 

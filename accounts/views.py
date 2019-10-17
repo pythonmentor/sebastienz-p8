@@ -1,8 +1,8 @@
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, logout, authenticate
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.shortcuts import render
 from django.http.response import HttpResponseRedirect
-from .forms import LoginForm, RegisterForm
+from .forms import LoginForm, RegisterForm, AccountForm
 
 from django.contrib import messages
 
@@ -29,22 +29,6 @@ def user_login(request):
     login_form = LoginForm()
     return render(request, 'accounts/login.html', {'login_form': login_form})
 
-    # if request.method == 'POST':
-    #     login_form = LoginForm(request, request.POST)
-    #     if login_form.is_valid():
-    #         username = login_form.cleaned_data.get('username')
-    #         raw_password = login_form.cleaned_data.get('password1')
-    #         authenticate_user = authenticate(username=username, password=raw_password)
-    #         if authenticate_user is not None:
-    #             login(request, authenticate_user)
-    #         return HttpResponseRedirect('/')
-    #     else:
-    #         register_form = RegisterForm()
-    #         return render(request, 'accounts/login.html', {'login_form': login_form})
-    # else:
-    #     login_form = LoginForm()
-    #     return render(request, 'accounts/login.html', {'login_form': login_form})
-
 
 def user_logout(request):
     logout(request)
@@ -68,12 +52,12 @@ def user_register(request):
         return render(request, 'accounts/register.html', {'register_form': register_form})
 
 
-def get_logged_customer_from_request(request):
-    if 'logged_user_id' in request.session:
-        logged_user_id = request.session['logged_user_id']
-        if len(Customer.objects.filter(id=logged_user_id)) == 1:
-            return Customer.objects.filter(id=logged_user_id)[0]
-        else:
-            return ''
-    else:
-        return None
+@login_required(login_url='accounts:login')
+def user_account(request):
+    account_form = AccountForm(instance=request.user)
+    return render(request, 'accounts/myaccount.html', {'account_form': account_form})
+
+
+@login_required(login_url='accounts:login')
+def user_products(request):
+    pass
