@@ -4,17 +4,47 @@
     --courgette: #3a6b10;
     --courgetteclair: #9a9f3e;
     --tomate: #bd3024;
-    --petitbeurreclair: #e68b19;
+    --petitbeurre: #e68b19;
     --petitbeurrefonce: #9d3f0e;
 }
 
 body{
-    background-color: #f0a8a1;
+    background-color: #9dacb4;
 }
 
 h1.text-uppercase{
-    color: var(--petitbeurreclair);
+    color: var(--petitbeurre);
 }
+
+.text-obergine{
+    color: var(--obergine);
+}
+
+.text-fond-veau{
+    color: var(--fondveau);
+}
+
+.text-courgette {
+    color: var(--courgette);
+}
+
+.text-courgette-clair {
+    color: var(--courgetteclair);
+}
+
+.text-tomate {
+    color: var(--tomate);
+}
+
+.text-petit-beurre {
+    color: var(--petitbeurre);
+}
+
+.text-petit-beurre-fonce{
+    color: var(--petitbeurrefonce);
+}
+
+
 
 #logo{
     height: 65px;
@@ -151,7 +181,7 @@ p.text-muted{
 
 /****************************************************************************/
 .help_message ul{
-    font-size: 11px;
+    font-size: 12px;
     color: var(--obergine);
     list-style:none;
     margin-left:0;
@@ -159,10 +189,9 @@ p.text-muted{
 }
 
 .error_message ul{
-    font-size: 11px;
+    font-size: 12px;
     color: var(--tomate);
     list-style: none;
-    list-style:none;
     margin-left:0;
     padding-left:0;
 }
@@ -170,3 +199,35 @@ p.text-muted{
 .input-group-append label {
 
 }
+
+.custom-toggler.navbar-toggler {
+    border-color: rgb(255 ,255 ,255);
+}
+
+.custom-toggler .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255 ,255 ,255 , 0.8)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+}
+
+#mainNav.navbar-scrolled .custom-toggler.navbar-toggler {
+    border-color: rgb(154,159,62);
+}
+
+#mainNav.navbar-scrolled .custom-toggler .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(154,159,62, 0.9)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+}
+
+#edit-togle {
+    width: 100px;
+    height: 30px;
+}
+/*#edit-togle .btn-primary{*/
+/*    color: #fff;*/
+/*    background-color: blue;*/
+/*}*/
+
+/*#edit-togle .toggle.on{*/
+/*    background-color: #6f42c1;*/
+/*}*/
+
+
+
