@@ -239,4 +239,3 @@ fabric.properties
 .idea/caches/build_file_checksums.ser
 
 accounts/migrations/0001_initial.py
-accounts/static/
