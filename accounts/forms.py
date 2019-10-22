@@ -1,48 +1,59 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
 from django.forms import ModelForm
 
+from .models import CustomUser
 
-class LoginForm(AuthenticationForm):
-    username = forms.CharField(label="Pseudo",
-                               widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': "pseudo"}))
+
+class LoginForm(forms.Form):
+    username = forms.EmailField(label="Adresse électronique :", required=True,
+                                widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'email'}))
     password = forms.CharField(label="Mot de passe",
                                widget=forms.PasswordInput(
                                    attrs={'class': 'form-control', 'placeholder': 'mot de passe'}))
 
+    class Meta:
+        model = CustomUser
+        fields = ['username', 'password']
+
 
 class RegisterForm(UserCreationForm):
-    username = forms.CharField(label="Pseudo",
+    username = forms.EmailField(label="Adresse électronique", required=True,
+                                error_messages={'unique': "Cette adresse mail à déjà été enregistré !"},
+                                widget=forms.EmailInput(attrs={'id': 'username', 'class': 'form-control',
+                                                               'placeholder': "email"}))
+    nickname = forms.CharField(label="Pseudo (optionnel)", required=False,
                                widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': "pseudo"}))
-    last_name = forms.CharField(label="Nom",
+    last_name = forms.CharField(label="Nom (optionnel)", required=False,
                                 widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'nom'}))
-    first_name = forms.CharField(label="Prénom",
+    first_name = forms.CharField(label="Prénom (optionnel)", required=False,
                                  widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'prénom'}))
-    email = forms.EmailField(label="Adresse électronique :", required=True,
-                             widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'email'}))
     password1 = forms.CharField(label="Mot de passe",
                                 widget=forms.PasswordInput(
                                     attrs={'class': 'form-control', 'placeholder': 'mot de passe'}))
-    password2 = forms.CharField(label="Confirmation mot de passe",
+    password2 = forms.CharField(label="Confirmation du mot de passe",
                                 widget=forms.PasswordInput(
                                     attrs={'class': 'form-control', 'placeholder': 'mot de passe'}))
 
-    class Meta(UserCreationForm.Meta):
-        model = User
-        fields = UserCreationForm.Meta.fields + ('username', 'last_name', 'first_name', 'email', 'password1')
+    class Meta:
+        model = CustomUser
+        fields = ['nickname', 'last_name', 'first_name', 'username', 'password1', 'password2']
 
 
 class AccountForm(ModelForm):
-    username = forms.CharField(label="Pseudo",
-                               widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': "pseudo"}))
+    nickname = forms.CharField(label="Pseudo", required=True,
+                               widget=forms.TextInput(attrs={'class': 'form-control', 'disabled': 'true',
+                                                             'placeholder': "pseudo"}))
     last_name = forms.CharField(label="Nom",
-                                widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'nom'}))
+                                widget=forms.TextInput(attrs={'class': 'form-control', 'disabled': 'true',
+                                                              'placeholder': 'nom'}))
     first_name = forms.CharField(label="Prénom",
-                                 widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'prénom'}))
-    email = forms.EmailField(label="Adresse électronique :", required=True,
-                             widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'email'}))
+                                 widget=forms.TextInput(attrs={'class': 'form-control', 'disabled': 'true',
+                                                               'placeholder': 'prénom'}))
+    username = forms.EmailField(label="Adresse électronique :", required=True,
+                             widget=forms.EmailInput(attrs={'class': 'form-control', 'disabled': 'true',
+                                                            'placeholder': 'email'}))
 
     class Meta(ModelForm):
-        model = User
-        fields = ('username', 'last_name', 'first_name', 'email')
+        model = CustomUser
+        fields = ('nickname', 'last_name', 'first_name', 'username')
