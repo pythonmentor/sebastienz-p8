@@ -1,5 +1,7 @@
+import re
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, logout, authenticate
+from django.contrib import messages
 from django.shortcuts import render
 from django.http.response import HttpResponseRedirect
 from .forms import LoginForm, RegisterForm, AccountForm
@@ -7,20 +9,18 @@ from .forms import LoginForm, RegisterForm, AccountForm
 from django.contrib import messages
 
 
-# Create your views here.
-
 def user_login(request):
     if request.method == 'POST':
-        login_form = LoginForm(request, data=request.POST)
+        login_form = LoginForm(request.POST)
         if login_form.is_valid():
             username = login_form.cleaned_data.get('username')
-            raw_password = login_form.cleaned_data.get('password')
-            authenticate_user = authenticate(username=username, password=raw_password)
+            password = login_form.cleaned_data.get('password')
+            authenticate_user = authenticate(username=username, password=password)
             if authenticate_user is not None:
                 login(request, authenticate_user)
                 return HttpResponseRedirect('/')
             else:
-                register_form = RegisterForm()
+                messages.error(request, "Email ou mot de passe invalide !")
                 return render(request, 'accounts/login.html', {'login_form': login_form})
         else:
             login_form = LoginForm()
@@ -41,8 +41,8 @@ def user_register(request):
         if register_form.is_valid():
             register_form.save(commit=True)
             username = register_form.cleaned_data.get('username')
-            raw_password = register_form.cleaned_data.get('password1')
-            authenticate_user = authenticate(username=username, password=raw_password)
+            password1 = register_form.cleaned_data.get('password1')
+            authenticate_user = authenticate(username=username, password=password1)
             login(request, authenticate_user)
             return HttpResponseRedirect('/')
         else:
