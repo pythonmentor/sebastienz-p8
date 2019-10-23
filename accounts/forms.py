@@ -42,13 +42,13 @@ class RegisterForm(UserCreationForm):
 
 
 class AccountForm(ModelForm):
-    username = forms.CharField(label="Pseudo", required=False,
+    username = forms.CharField(label="Nom d'utilisateur", required=False,
                                widget=forms.TextInput(attrs={'class': 'form-control', 'disabled': 'true',
                                                              'placeholder': "pseudo"}))
-    last_name = forms.CharField(label="Nom",
+    last_name = forms.CharField(label="Nom", required=False,
                                 widget=forms.TextInput(attrs={'class': 'form-control', 'disabled': 'true',
                                                               'placeholder': 'nom'}))
-    first_name = forms.CharField(label="Prénom",
+    first_name = forms.CharField(label="Prénom", required=False,
                                  widget=forms.TextInput(attrs={'class': 'form-control', 'disabled': 'true',
                                                                'placeholder': 'prénom'}))
     email = forms.EmailField(label="Adresse électronique :", required=True,
