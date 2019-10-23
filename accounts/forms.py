@@ -19,7 +19,7 @@ class LoginForm(forms.Form):
 
 class RegisterForm(UserCreationForm):
     username = forms.CharField(label="Nom d'utilisateur (optionnel)", required=False,
-                                widget=forms.EmailInput(attrs={'id': 'username', 'class': 'form-control',
+                                widget=forms.TextInput(attrs={'id': 'username', 'class': 'form-control',
                                                                'placeholder': "nom d'utilisateur"}))
     email = forms.EmailField(label="Adresse électronique", required=True,
                                 error_messages={'unique': "Cette adresse mail à déjà été enregistré !"},
