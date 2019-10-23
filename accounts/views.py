@@ -1,10 +1,11 @@
-import re
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, logout, authenticate
-from django.contrib import messages
 from django.shortcuts import render
 from django.http.response import HttpResponseRedirect
+from django.urls import reverse
+
 from .forms import LoginForm, RegisterForm, AccountForm
+from .models import User
 
 from django.contrib import messages
 
@@ -54,8 +55,17 @@ def user_register(request):
 
 @login_required(login_url='accounts:login')
 def user_account(request):
-    account_form = AccountForm(instance=request.user)
-    return render(request, 'accounts/myaccount.html', {'account_form': account_form})
+    current_user = User.objects.get(pk=request.user.id)
+    if request.method == "POST":
+        account_form = AccountForm(request.POST, instance=current_user)
+        if account_form.is_valid():
+            account_form.save()
+            return HttpResponseRedirect(reverse('accounts:myaccount'))
+        else:
+            return render(request, 'accounts/myaccount.html', {'account_form': account_form})
+    else:
+        account_form = AccountForm(instance=current_user)
+        return render(request, 'accounts/myaccount.html', {'account_form': account_form})
 
 
 @login_required(login_url='accounts:login')
