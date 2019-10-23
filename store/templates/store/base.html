@@ -52,10 +52,10 @@
                {% if user.is_authenticated %} href="{% url 'accounts:myaccount' %}"
                {% else %} href="{% url 'accounts:login' %}" {% endif %} title="Mon compte"><br>
                 <p>{% if user.is_authenticated %}
-                        {% if user.nickname != "" %}
-                            {{ user.nickname }}
+                        {% if user.username != "" %}
+                            {{ user.username }}
                         {% else %}
-                            {{ user.formated_username}}
+                            {{ user.formated_email}}
                         {% endif %}
                    {% endif %}
                 </p>

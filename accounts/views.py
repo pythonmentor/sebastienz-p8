@@ -13,9 +13,9 @@ def user_login(request):
     if request.method == 'POST':
         login_form = LoginForm(request.POST)
         if login_form.is_valid():
-            username = login_form.cleaned_data.get('username')
+            email = login_form.cleaned_data.get('email')
             password = login_form.cleaned_data.get('password')
-            authenticate_user = authenticate(username=username, password=password)
+            authenticate_user = authenticate(email=email, password=password)
             if authenticate_user is not None:
                 login(request, authenticate_user)
                 return HttpResponseRedirect('/')
@@ -40,9 +40,9 @@ def user_register(request):
         register_form = RegisterForm(request.POST)
         if register_form.is_valid():
             register_form.save(commit=True)
-            username = register_form.cleaned_data.get('username')
+            email = register_form.cleaned_data.get('email')
             password1 = register_form.cleaned_data.get('password1')
-            authenticate_user = authenticate(username=username, password=password1)
+            authenticate_user = authenticate(email=email, password=password1)
             login(request, authenticate_user)
             return HttpResponseRedirect('/')
         else:
