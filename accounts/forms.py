@@ -6,6 +6,7 @@ from .models import User
 
 
 class LoginForm(forms.Form):
+    """Define the login form"""
     email = forms.EmailField(label="Adresse électronique :", required=True,
                                 widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'email'}))
     password = forms.CharField(label="Mot de passe",
@@ -18,6 +19,7 @@ class LoginForm(forms.Form):
 
 
 class RegisterForm(UserCreationForm):
+    """Define the register form"""
     username = forms.CharField(label="Nom d'utilisateur (optionnel)", required=False,
                                 widget=forms.TextInput(attrs={'id': 'username', 'class': 'form-control',
                                                                'placeholder': "nom d'utilisateur"}))
@@ -42,6 +44,7 @@ class RegisterForm(UserCreationForm):
 
 
 class AccountForm(ModelForm):
+    """Define the accounts form"""
     username = forms.CharField(label="Nom d'utilisateur", required=False,
                                widget=forms.TextInput(attrs={'class': 'form-control', 'disabled': 'true',
                                                              'placeholder': "pseudo"}))
