@@ -46,7 +46,7 @@ class User(AbstractUser):
     password = models.CharField(verbose_name="Mot de passe", max_length=150)
 
     def __str__(self):
-        return str(self.id) + ": " + self.email
+        return self.email
 
     def formated_email(self):
         regex = r"\w+"
