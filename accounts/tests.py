@@ -63,11 +63,16 @@ class LogoutPageTestCase(TestCase):
     def test_logout_page(self):
         client = Client()
         client.force_login(self.user)
+        # Test if user is logged in after login
         user = get_user(client)
-        # Test user is logged
+        self.assertFalse(user.is_anonymous)
+        print(user.email)
         # Call logout page
         response = client.get(reverse('accounts:logout'))
-        # print(self.user.is_authenticated)
+        # Test if user is unlogged after call logout page
+        user = get_user(client)
+        self.assertTrue(user.is_anonymous)
+        # Test if redirect after call logout page
         self.assertEqual(response.status_code, 302)
 
 
