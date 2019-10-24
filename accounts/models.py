@@ -39,6 +39,7 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractUser):
+    """Define user model """
     username = models.CharField(verbose_name="Nom d'utilisateur", blank=True, unique=False, max_length=50)
     last_name = models.CharField(verbose_name="Nom", max_length=150, blank=True)
     first_name = models.CharField(verbose_name="Prénom", max_length=150, blank=True)
