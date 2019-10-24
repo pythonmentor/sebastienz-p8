@@ -1,49 +1,59 @@
 {% extends 'store/base.html' %}
 {% load static %}
-
-{% block content%}
-<!-- About Section -->
-<section class="about-section bg-primary" id="about">
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-lg-10 text-center">
-        <h2 class="text-white mt-0">Colette et Remy</h2>
-        <hr class="divider light my-4">
-        <p class="text-white-50 mb-4">Remy et Colette sont amoureux de la gastronomie française (on ne peut les blâmer !). Travaillant quotidiennement avec les meilleurs produits du terroir, ils affectionnent particulièrement la bonne chaire et aiment partager leur passion. Il est donc normal que Remy ait sauté au plafond quand Colette, un jour de déprime, sortit du placard un kilo de Nutella et l’attaqua à la petite cuillère. Pourquoi ne pas opter pour une pâte à tartiner aux noisettes, plus consistante et moins sucrée ? Pourquoi, oh pourquoi s’infliger une telle souffrance ? Rémy était sidéré. La réponse de Colette fut simple : elle n’avait pas trouvé de substitut assez convainquant. A vrai dire, elle n’avait même pas cherché. <br>Tous deux se souvinrent alors que nombre de leurs clients leur avaient compté, entre deux verres, qu’il était difficile de trouver des substituts aux cochonneries que nous mangions dès le petit déjeuner. C'est pourquoi, ils ont décidé de créer cette application web.</p>
-        <div class="row col-lg-12 photos">
-            <div class="col-md-6">
-                <img src="{% static 'store/img/Colette.jpg' %}" alt="Colette">
-            </div>
-            <div class="col-md-6">
-                <img src="{% static 'store/img/Remy.png' %}" alt="Remy">
-            </div>
-       </div>
-      </div>
+{% block header_content %}
+    <h2 class="text-white-75 text-shadow font-weight-light mb-5">Trouvez un produit de substitution pour ceux que vous consommez tous les jours !</h2>
+    <div class="col-lg-8 offset-lg-2 align-self-baseline">
+      {% include 'store/search_form.html' %}
     </div>
-  </div>
-</section>
-
-<!-- Contact Section -->
-<section class="page-section" id="contact">
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-lg-8 text-center">
-        <h2 class="mt-0">Contactez-nous !</h2>
-        <hr class="divider my-4">
-        <p class="text-muted mb-5">Vous avez des remarques ou des suggestions d'amélioration pour notre site ? <br>Contacter nous par email !<br>Vous préférer en discuter dans notre restaurant en dégustant notre excellente ratatouille ?<br> Appelez nous pour réserver votre table.</p>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-lg-4 ml-auto text-center mb-5 mb-lg-0">
-        <i class="fas fa-phone fa-3x mb-3 text-muted"></i>
-        <div>+1 (202) 555-0149</div>
-      </div>
-      <div class="col-lg-4 mr-auto text-center">
-        <i class="fas fa-envelope fa-3x mb-3 text-muted"></i>
-        <!-- Make sure to change the email address in anchor text AND the link below! -->
-        <a class="d-block" href="mailto:contact@pur_beurre.com">contact@pur_beurre.com</a>
-      </div>
-    </div>
-  </div>
-</section>
 {% endblock %}
+{% block content%}
+    <!-- About Section -->
+  <section class="about-section bg-primary" id="about">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-10 text-center">
+            <h2 class="text-white mt-0">Colette et Remy</h2>
+            <hr class="divider light my-4">
+            <p class="text-white-50 mb-4">Remy et Colette sont amoureux de la gastronomie française (on ne peut les blâmer !). Travaillant quotidiennement avec les meilleurs produits du terroir, ils affectionnent particulièrement la bonne chaire et aiment partager leur passion. Il est donc normal que Remy ait sauté au plafond quand Colette, un jour de déprime, sortit du placard un kilo de Nutella et l’attaqua à la petite cuillère. Pourquoi ne pas opter pour une pâte à tartiner aux noisettes, plus consistante et moins sucrée ? Pourquoi, oh pourquoi s’infliger une telle souffrance ? Rémy était sidéré. La réponse de Colette fut simple : elle n’avait pas trouvé de substitut assez convainquant. A vrai dire, elle n’avait même pas cherché. <br>Tous deux se souvinrent alors que nombre de leurs clients leur avaient compté, entre deux verres, qu’il était difficile de trouver des substituts aux cochonneries que nous mangions dès le petit déjeuner. C'est pourquoi, ils ont décidé de créer cette application web.</p>
+            <div class="row col-lg-12 photos">
+                <div class="col-md-6">
+                    <img src="{% static 'store/img/Colette.jpg' %}" alt="Colette">
+                </div>
+                <div class="col-md-6">
+                    <img src="{% static 'store/img/Remy.png' %}" alt="Remy">
+                </div>
+           </div>
+          </div>
+        </div>
+      </div>
+  </section>
+{% endblock %}
+
+{% block contact_content %}
+
+    <!-- Contact Section -->
+    <section class="page-section" id="contact">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-8 text-center">
+            <h2 class="mt-0 text-obergine">Contactez-nous !</h2>
+            <hr class="divider my-4">
+            <p class="mb-5 text-petit-beurre-fonce">Vous avez des remarques ou des suggestions d'amélioration pour notre site ? <br>Contacter nous par email !<br>Vous préférer en discuter dans notre restaurant en dégustant notre excellente ratatouille ?<br> Appelez nous pour réserver votre table.</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-4 ml-auto text-center mb-5 mb-lg-0">
+            <i class="fas fa-phone fa-3x mb-3 text-courgette"></i>
+            <div class="text-obergine">+1 (202) 555-0149</div>
+          </div>
+          <div class="col-lg-4 mr-auto text-center">
+            <i class="fas fa-envelope fa-3x mb-3 text-courgette"></i>
+            <!-- Make sure to change the email address in anchor text AND the link below! -->
+            <a class="d-block text-fond-veau" href="mailto:contact@pur_beurre.com">contact@pur_beurre.com</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+{% endblock %}
+

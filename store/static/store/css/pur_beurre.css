@@ -1,24 +1,83 @@
+header.masthead {
+    padding-top: 6rem;
+    padding-bottom: calc(10rem - 72px);
+    background: linear-gradient(to bottom, rgba(92, 77, 66, 0.5) 0%, rgba(92, 77, 66, 0.5) 100%), url("../img/bg-food.jpeg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-size: cover;
+}
+
+form label {
+    white-space: nowrap;
+    max-width: 150px;
+    text-overflow: ellipsis;
+    float:left;
+}
+
 :root{
     --obergine: #1d1221;
     --fondveau: #9f5b58;
     --courgette: #3a6b10;
     --courgetteclair: #9a9f3e;
     --tomate: #bd3024;
-    --petitbeurreclair: #e68b19;
+    --petitbeurre: #e68b19;
     --petitbeurrefonce: #9d3f0e;
 }
 
 body{
-    background-color: #f0a8a1;
+    background-color: #9dacb4;
+}
+
+a {
+  color: var(--courgetteclair);
+  text-decoration: none;
+  background-color: transparent;
 }
 
 h1.text-uppercase{
-    color: var(--petitbeurreclair);
+    color: var(--petitbeurre);
+}
+
+.text-obergine{
+    color: var(--obergine);
+}
+
+.text-fond-veau{
+    color: var(--fondveau);
+}
+
+.text-courgette {
+    color: var(--courgette);
+}
+
+.text-courgette-clair {
+    color: var(--courgetteclair);
+}
+
+.text-tomate {
+    color: var(--tomate);
+}
+
+.text-petit-beurre {
+    color: var(--petitbeurre);
+}
+
+.text-petit-beurre-fonce{
+    color: var(--petitbeurrefonce);
+}
+
+.text-shadow{
+    text-shadow: 5px 5px 5px var(--obergine);
 }
 
 #logo{
     height: 65px;
     margin-right: 2em;
+}
+
+.form-control{
+    color: var(--obergine);
 }
 
 .zoom a{
@@ -151,7 +210,7 @@ p.text-muted{
 
 /****************************************************************************/
 .help_message ul{
-    font-size: 11px;
+    font-size: 12px;
     color: var(--obergine);
     list-style:none;
     margin-left:0;
@@ -159,10 +218,19 @@ p.text-muted{
 }
 
 .error_message ul{
-    font-size: 11px;
-    color: var(--tomate);
+    font-size: 14px;
+    color: var(--obergine);
+    background-color: var(--tomate);
     list-style: none;
-    list-style:none;
+    margin-left:0;
+    padding-left:0;
+}
+
+.errorlist {
+    font-size: 14px;
+    color: var(--obergine);
+    background-color: var(--tomate);
+    list-style: none;
     margin-left:0;
     padding-left:0;
 }
@@ -170,3 +238,74 @@ p.text-muted{
 .input-group-append label {
 
 }
+
+.custom-toggler.navbar-toggler {
+    border-color: rgb(255 ,255 ,255);
+}
+
+.custom-toggler .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255 ,255 ,255 , 0.8)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+}
+
+#mainNav.navbar-scrolled .custom-toggler.navbar-toggler {
+    border-color: rgb(154,159,62);
+}
+
+#mainNav.navbar-scrolled .custom-toggler .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(154,159,62, 0.9)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+}
+
+#edit-togle {
+    width: 100px;
+    height: 30px;
+}
+
+#edition .btn {
+    color: #fff;
+    background-color: var(--petitbeurre);
+    border-color: var(--obergine);
+    width: 100px;
+
+}
+
+#edition .btn-primary {
+    color: #fff;
+    background-color: var(--courgetteclair);
+    border-color: var(--obergine);
+}
+
+#edition .btn-primary .toggle-on {
+    color: var(--petitbeurrefonce);
+    background-color: var(--courgetteclair);
+    border-color: var(--obergine);
+}
+
+#edition .btn-default {
+    color: #fff;
+    background-color: var(--petitbeurre);
+    border-color: var(--obergine);
+    width: 20px;
+}
+
+#edition .btn-default .toggle-off {
+    color: var(--courgette);
+    background-color: var(--petitbeurre);
+    border-color: var(--obergine);
+}
+
+#edition .btn-default .toggle-handle {
+    color: #fff;
+    background-color: var(--courgetteclair);
+    border-color: var(--obergine);
+    width: 20px;
+}
+
+
+
+
+
+
+
+
+
+

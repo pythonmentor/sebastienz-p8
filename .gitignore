@@ -239,4 +239,7 @@ fabric.properties
 .idea/caches/build_file_checksums.ser
 
 accounts/migrations/0001_initial.py
-accounts/static/
+/.idea/misc.xml
+/.idea/inspectionProfiles/profiles_settings.xml
+/.idea/pur_beurre.iml
+/.idea/vcs.xml

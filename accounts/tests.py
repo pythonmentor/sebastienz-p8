@@ -1,14 +1,10 @@
-from django.test import TestCase
-
-# Create your tests here.
-
 from django.test import TestCase, Client, RequestFactory
 from django.urls import reverse
 from django.contrib.auth import login, logout, authenticate, get_user
 
 from accounts.forms import RegisterForm, LoginForm, AccountForm
 from .models import User
-from .views import user_logout
+from .views import user_login, user_register, user_logout, user_account, user_products
 
 
 # Create your tests here.
@@ -58,23 +54,6 @@ class LoginPageTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
 
 
-class LogoutPageTestCase(TestCase):
-    def setUp(self):
-        self.user = User.objects.create(email='Sebastien@fakemail.com')
-        self.user.set_password('fake_password')
-        self.user.save()
-
-    def test_logout_page(self):
-        client = Client()
-        client.force_login(self.user)
-        user = get_user(client)
-        # Test user is logged
-        # Call logout page
-        response = client.get(reverse('accounts:logout'))
-        # print(self.user.is_authenticated)
-        self.assertEqual(response.status_code, 302)
-
-
 class RegisterPageTestCase(TestCase):
     def setUp(self):
         self.user = User.objects.create(email='Sebastien@fakemail.com', password='fake_password')
@@ -110,7 +89,7 @@ class RegisterPageTestCase(TestCase):
         response = client.post(reverse('accounts:register'), self.good_user_data)
         # Test if user is authenticate
         user = get_user(client)
-        self.assertTrue(login)
+        self.assertTrue(user.is_authenticated)
         # Test if user is not saved in database
         # One user is already saved in database in setUp also yet must be two user saved
         user_in_database = len(User.objects.all())
@@ -186,3 +165,4 @@ class AccountPageTestCase(TestCase):
         # Test if account page is redirected when posted with good user data
         response = client.post(reverse('accounts:myaccount'), self.bad_user_data)
         self.assertEqual(response.status_code, 200)
+

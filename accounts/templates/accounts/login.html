@@ -6,6 +6,11 @@
 {% block header_content %}
     <div class="col-md-4 offset-md-4 align-center text-left text-white">
         <form action="{% url 'accounts:login' %}" method="post">
+        {% if messages %}
+            {% for message in messages %}
+            <p class="errorlist">{{ message }}</p>
+            {% endfor %}
+        {% endif %}
         {% csrf_token %}
         {{ login_form.as_p }}
         <br>

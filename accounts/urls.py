@@ -1,11 +1,14 @@
 from django.conf.urls import url
+from django.urls import path, re_path
 from . import views
 
 app_name = "accounts"
 
 urlpatterns = [
-    url(r'^$', views.user_login, name='login'),
-    url(r'^login/$', views.user_login, name='login'),
-    url(r'^logout/$', views.user_logout, name='logout'),
-    url(r'^register/$', views.user_register, name='register')
+    path('', views.user_login, name='login'),
+    path('login/', views.user_login, name='login'),
+    path('logout/', views.user_logout, name='logout'),
+    path('register/', views.user_register, name='register'),
+    path('myaccount/', views.user_account, name='myaccount'),
+    path('myproducts/', views.user_products, name='myproducts'),
 ]

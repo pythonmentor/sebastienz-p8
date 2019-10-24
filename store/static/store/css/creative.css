@@ -9645,7 +9645,7 @@ hr.light {
     color: #212529;
   }
   #mainNav.navbar-scrolled .navbar-brand:hover {
-    color: #f4623a;
+    color: #bd3024;
   }
   #mainNav.navbar-scrolled .navbar-nav .nav-item .nav-link {
     color: #212529;
@@ -9673,7 +9673,7 @@ header.masthead h1 {
   header.masthead {
     height: 100vh;
     min-height: 40rem;
-    padding-top: 72px;
+    padding-top: 74px;
     padding-bottom: 0;
   }
   header.masthead p {

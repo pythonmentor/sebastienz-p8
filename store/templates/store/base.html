@@ -27,6 +27,9 @@
   <!-- Theme CSS - Pur Beurre -->
   <link href="{% static '/store/css/pur_beurre.css' %}" rel="stylesheet">
 
+  <!-- Bootstrap toggle button css-->
+  <link href="{% static '/accounts/css/bootstrap-toggle-min.css' %}" rel="stylesheet">
+
 </head>
 
 <body id="page-top">
@@ -35,7 +38,7 @@
     <div class="container">
       <a href="/"><img id="logo" class="img-responsive" src="{% static 'store/img/logo_pur_beurre.png' %}" alt="logo_pur_beurre"></a>
       <a class="navbar-brand js-scroll-trigger" href="/">Pur Beurre</a>
-      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler navbar-toggler-right custom-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
 
@@ -45,14 +48,24 @@
             <a class="btn btn-dark text-dark btn-sm" href="/">Chercher</a>
           </li>
           <li class="btn" id="myaccount">
-            <a class="fas fa-user fa-2x mb-3 text-capitalize" href="/accounts/myaccount/" title="Mon compte"><br>
-                <p>{% if user.is_authenticated %}{{ user.username }}{% endif %}</p></a>
+            <a class="fas fa-user fa-2x mb-3 text-capitalize"
+               {% if user.is_authenticated %} href="{% url 'accounts:myaccount' %}"
+               {% else %} href="{% url 'accounts:login' %}" {% endif %} title="Mon compte"><br>
+                <p>{% if user.is_authenticated %}
+                        {% if user.username != "" %}
+                            {{ user.username }}
+                        {% else %}
+                            {{ user.formated_email}}
+                        {% endif %}
+                   {% endif %}
+                </p>
+            </a>
           </li>
           <li class="btn" id="myproducts">
-            <a class="icon-Carotte fa-2x mb-3" href="/account/my-products/" title="Mes aliments"></a>
+            <a class="icon-Carotte fa-2x mb-3" href="{#% url 'accounts:myproducts' %#}" title="Mes aliments"></a>
           </li>
           <li class="btn" id="logout">
-            <a class="fas fa-sign-out-alt fa-2x mb-3" href="/accounts/logout/" title="Me déconnecter"></a>
+            <a class="fas fa-sign-out-alt fa-2x mb-3" href="{% url 'accounts:logout' %}" title="Me déconnecter"></a>
           </li>
         </ul>
       </div>
@@ -64,22 +77,21 @@
     <div class="container h-100">
       <div class="row h-100 align-items-center justify-content-center text-center">
         <div class="col-lg-12 align-self-middle">
-          <h1 class="text-uppercase font-weight-bold">{% block header_title %} Du gras, oui, mais de qualité ! {% endblock %}</h1>
+          <h1 class="text-uppercase text-shadow font-weight-bold">
+              {% block header_title %} Du gras, oui, mais de qualité ! {% endblock %}
+          </h1>
           <hr class="divider my-4">
-          {% block header_content %}
-          <h2 class="text-white-75 font-weight-light mb-5">Trouvez un produit de substitution pour ceux que vous consommez tous les jours !</h2>
-          <div class="col-lg-8 offset-lg-2 align-self-baseline">
-              {% include 'store/search_form.html' %}
-          </div>
-          {% endblock %}
+          {% block header_content %} {% endblock %}
         </div>
 
       </div>
     </div>
   </header>
 
-    {% block content %}{% endblock %}
+  {% block content %} {% endblock %}
 
+  <!-- Contact Section -->
+  {% block contact_content %} {% endblock %}
 
   <!-- Footer -->
   <footer class="bg-dark py-3">
@@ -106,6 +118,9 @@
 
   <!-- Custom scripts for accounts app -->
   <script src="{% static 'accounts/js/accounts.js' %}"></script>
+
+  <!-- Boostrap toggle buttons -->
+  <script src="{% static 'accounts/js/bootstrap-toggle.min.js' %}"></script>
 
 </body>
 

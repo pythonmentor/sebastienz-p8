@@ -1,26 +1,27 @@
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, logout, authenticate
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.shortcuts import render
 from django.http.response import HttpResponseRedirect
-from .forms import LoginForm, RegisterForm
+from django.urls import reverse
+
+from .forms import LoginForm, RegisterForm, AccountForm
+from .models import User
 
 from django.contrib import messages
 
 
-# Create your views here.
-
 def user_login(request):
     if request.method == 'POST':
-        login_form = LoginForm(request, data=request.POST)
+        login_form = LoginForm(request.POST)
         if login_form.is_valid():
-            username = login_form.cleaned_data.get('username')
-            raw_password = login_form.cleaned_data.get('password')
-            authenticate_user = authenticate(username=username, password=raw_password)
+            email = login_form.cleaned_data.get('email')
+            password = login_form.cleaned_data.get('password')
+            authenticate_user = authenticate(email=email, password=password)
             if authenticate_user is not None:
                 login(request, authenticate_user)
                 return HttpResponseRedirect('/')
             else:
-                register_form = RegisterForm()
+                messages.error(request, "Email ou mot de passe invalide !")
                 return render(request, 'accounts/login.html', {'login_form': login_form})
         else:
             login_form = LoginForm()
@@ -40,9 +41,9 @@ def user_register(request):
         register_form = RegisterForm(request.POST)
         if register_form.is_valid():
             register_form.save(commit=True)
-            username = register_form.cleaned_data.get('username')
-            raw_password = register_form.cleaned_data.get('password1')
-            authenticate_user = authenticate(username=username, password=raw_password)
+            email = register_form.cleaned_data.get('email')
+            password1 = register_form.cleaned_data.get('password1')
+            authenticate_user = authenticate(email=email, password=password1)
             login(request, authenticate_user)
             return HttpResponseRedirect('/')
         else:
@@ -52,12 +53,21 @@ def user_register(request):
         return render(request, 'accounts/register.html', {'register_form': register_form})
 
 
-def get_logged_customer_from_request(request):
-    if 'logged_user_id' in request.session:
-        logged_user_id = request.session['logged_user_id']
-        if len(Customer.objects.filter(id=logged_user_id)) == 1:
-            return Customer.objects.filter(id=logged_user_id)[0]
+@login_required(login_url='accounts:login')
+def user_account(request):
+    current_user = User.objects.get(pk=request.user.id)
+    if request.method == "POST":
+        account_form = AccountForm(request.POST, instance=current_user)
+        if account_form.is_valid():
+            account_form.save()
+            return HttpResponseRedirect(reverse('accounts:myaccount'))
         else:
-            return ''
+            return render(request, 'accounts/myaccount.html', {'account_form': account_form})
     else:
-        return None
+        account_form = AccountForm(instance=current_user)
+        return render(request, 'accounts/myaccount.html', {'account_form': account_form})
+
+
+@login_required(login_url='accounts:login')
+def user_products(request):
+    pass
