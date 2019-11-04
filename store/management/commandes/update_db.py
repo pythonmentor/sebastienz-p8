@@ -78,16 +78,11 @@ class Command:
 
     @classmethod
     def update_db(cls):
-        i = 0
-        j = 0
         for cat in settings.CATEGORIES:
             categorie_inst, created = Categories.objects.update_or_create(name=cat)
-            print(categorie_inst)
             products_list = cls._search_api_data(cat)
 
             for product in products_list:
-                print("Produit {0} : {1} \n".format(j, product))
-                j += 1
                 try:
                     db_product, created = Products.objects.update_or_create(**{key: value for (key, value)
                                                                                in product.items()
