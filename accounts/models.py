@@ -40,9 +40,9 @@ class UserManager(BaseUserManager):
 
 class User(AbstractUser):
     """Define user model """
-    username = models.CharField(verbose_name="Nom d'utilisateur", blank=True, unique=False, max_length=50)
-    last_name = models.CharField(verbose_name="Nom", max_length=150, blank=True)
-    first_name = models.CharField(verbose_name="Prénom", max_length=150, blank=True)
+    username = models.CharField(verbose_name="Nom d'utilisateur", blank=True, null=True, unique=False, max_length=50)
+    last_name = models.CharField(verbose_name="Nom", blank=True, null=True, max_length=150)
+    first_name = models.CharField(verbose_name="Prénom", blank=True, null=True, max_length=150)
     email = models.EmailField(verbose_name="Adresse mail", blank=False, unique=True, max_length=150)
     password = models.CharField(verbose_name="Mot de passe", max_length=150)
 
@@ -59,3 +59,8 @@ class User(AbstractUser):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
     objects = UserManager()
+
+
+class Favorites(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    substitutes_id = models.CharField(verbose_name='Non du nutriments', null=False, max_length=50)
