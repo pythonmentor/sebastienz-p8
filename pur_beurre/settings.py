@@ -135,3 +135,12 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'store/static/'),
 ]
 
+# Openfoofacts search catégories
+CATEGORIES = [
+    "Viandes",
+    "Plats préparés",
+    "Petit-déjeuners",
+    "Desserts",
+    "Fromages"
+]
+
