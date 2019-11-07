@@ -6,7 +6,7 @@ from django.db import DataError
 from store.models import Categories, Products, Nutriments_for_100g, Substitutes
 
 
-class Command:
+class Command(BaseCommand):
     help = 'Read the data from Openfoodfacts and update the local database'
 
     @classmethod
@@ -58,7 +58,7 @@ class Command:
                             product_items[key] = cls._filtered_nutriments(product[key])
                         else:
                             product_items[key] = product[key]
-                        products_list.append(product_items)
+                products_list.append(product_items)
         return products_list
 
     @classmethod
@@ -69,6 +69,7 @@ class Command:
             "Sucres": "sugars_100g",
             "Sel": "salt_100g"
         }
+
         raw_nutriments = {}
         for key in nutriments.keys():
             if key in needed_nutriments_data.values():
@@ -83,19 +84,24 @@ class Command:
             products_list = cls._search_api_data(cat)
 
             for product in products_list:
-                try:
-                    db_product, created = Products.objects.update_or_create(**{key: value for (key, value)
-                                                                               in product.items()
-                                                                               if key in [fields.name for fields in
-                                                                                          Products._meta.get_fields()]
-                                                                               and key != "categories"})
+                if Products.objects.filter(id=product["id"]).exists() is False:
+                    try:
+                        db_product, created = Products.objects.update_or_create(**{key: value for (key, value)
+                                                                                   in product.items()
+                                                                                   if key in [fields.name for fields in
+                                                                                              Products._meta.get_fields()]
+                                                                                   and key != "categories"})
 
-                    for nutriment_name, quantity in product['nutriments'].items():
-                        nutriment_inst, created = Nutriments_for_100g.objects.update_or_create(name=nutriment_name,
-                                                                                               quantity=quantity)
-                        nutriment_inst.product.add(db_product)
+                        for nutriment_name, quantity in product['nutriments'].items():
+                            nutriment_inst, created = Nutriments_for_100g.objects.update_or_create(name=nutriment_name,
+                                                                                                   quantity=quantity)
+                            nutriment_inst.product.add(db_product)
 
-                    db_product.categories.add(categorie_inst)
+                        db_product.categories.add(categorie_inst)
 
-                except DataError:
-                    pass
+                    except DataError:
+                        pass
+
+    def handle(self, *args, **options):
+        """ Customer command that will be called """
+        self.update_db()
