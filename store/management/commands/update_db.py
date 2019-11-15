@@ -47,17 +47,16 @@ class Command(BaseCommand):
 
         for product in products_data["products"]:
             product_items = {}
-            # Check if all key in products
-            if all(key in product for key in needed_data):
+            # Check if all key in products and all values in products are not empty
+            if all(key in product for key in needed_data) and all(product.get(key) != '' for key in needed_data):
                 for key in needed_data:
-                    # Check if all values in products and value not empty
-                    if all(product.get(key) != '' for key in needed_data):
-                        # if all(str(product[key])) and product[key] != ' ':
-                        # if all(str([value for value in product[key]])):
-                        if key == "nutriments":
-                            product_items[key] = cls._filtered_nutriments(product[key])
-                        else:
-                            product_items[key] = product[key]
+                    if key == "ingredients_text_fr":
+                        product_items[key] = product[key].replace('_', '').lstrip()
+                    elif key == "nutriments":
+                        product_items[key] = cls._filtered_nutriments(product[key])
+                    else:
+                        product_items[key] = product[key]
+
                 products_list.append(product_items)
         return products_list
 
@@ -74,7 +73,7 @@ class Command(BaseCommand):
         for key in nutriments.keys():
             if key in needed_nutriments_data.values():
                 for fr_key, en_key in needed_nutriments_data.items():
-                    raw_nutriments[fr_key] = nutriments.get(en_key)
+                    raw_nutriments[fr_key] = str(nutriments.get(en_key)).replace(".", ",")
         return raw_nutriments
 
     @classmethod
@@ -82,25 +81,35 @@ class Command(BaseCommand):
         for cat in settings.CATEGORIES:
             categorie_inst, created = Categories.objects.update_or_create(name=cat)
             products_list = cls._search_api_data(cat)
-
             for product in products_list:
-                if Products.objects.filter(id=product["id"]).exists() is False:
-                    try:
-                        db_product, created = Products.objects.update_or_create(**{key: value for (key, value)
-                                                                                   in product.items()
-                                                                                   if key in [fields.name for fields in
-                                                                                              Products._meta.get_fields()]
-                                                                                   and key != "categories"})
+                # if Products.objects.filter(id=product["id"]).exists() is False:
+                try:
+                    db_product, created = Products.objects.update_or_create(id=product['id'], defaults={key: value
+                                                                            for (key, value) in product.items()
+                                                                               if key in [fields.name for fields in
+                                                                                          Products._meta.get_fields()]
+                                                                               and key != "categories" and key != 'id'})
 
-                        for nutriment_name, quantity in product['nutriments'].items():
-                            nutriment_inst, created = Nutriments_for_100g.objects.update_or_create(name=nutriment_name,
-                                                                                                   quantity=quantity)
-                            nutriment_inst.product.add(db_product)
+                    for nutriment_name, quantity in product['nutriments'].items():
+                        nutriment_inst, created = Nutriments_for_100g.objects.update_or_create(name=nutriment_name,
+                                                                                               quantity=quantity)
+                        nutriment_inst.product.add(db_product)
 
-                        db_product.categories.add(categorie_inst)
+                    for categorie in product['categories'].split(','):
+                        categorie = "".join([string for string in categorie if not string.isdigit()])
+                        if categorie[:3].lower() == "fr:":
+                            categorie = categorie.lstrip('fr').strip(':').strip(' ').capitalize()
+                        if (len(categorie) > 2) and (categorie[:3].lower() != 'en:'):
+                            print(categorie)
+                            cat_inst, created = Categories.objects.update_or_create(name=categorie)
+                            print(db_product.product_name)
+                            print(cat_inst)
+                            db_product.categories.add(cat_inst)
 
-                    except DataError:
-                        pass
+                    db_product.categories.add(categorie_inst)
+
+                except DataError:
+                    pass
 
     def handle(self, *args, **options):
         """ Customer command that will be called """
