@@ -1,13 +1,10 @@
-from django.test import TestCase, Client, RequestFactory
+from django.test import TestCase, Client
 from django.urls import reverse
-from django.contrib.auth import login, logout, authenticate, get_user
+from django.contrib.auth import login, get_user
 
 from accounts.forms import RegisterForm, LoginForm, AccountForm
 from .models import User
-from .views import user_logout
 
-
-# Create your tests here.
 
 class LoginPageTestCase(TestCase):
     def setUp(self):
