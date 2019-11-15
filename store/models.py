@@ -12,7 +12,8 @@ class Categories(models.Model):
 class Products(models.Model):
     id = models.BigIntegerField(primary_key=True)
     categories = models.ManyToManyField(Categories, related_name="categories")
-    substitutes = models.ManyToManyField('self', related_name='substitute', symmetrical=False, through="Substitutes",
+    substitutes = models.ManyToManyField('self', related_name='substitute', symmetrical=False,
+                                         through="User_Favorites_Substitutes",
                                          through_fields=('prod_base', 'prod_substitute'))
     product_name = models.CharField(verbose_name='Nom du produit', max_length=150)
     generic_name_fr = models.CharField(verbose_name='Nom générique', max_length=300)
@@ -43,3 +44,8 @@ class Nutriments_for_100g(models.Model):
         verbose_name = "Nutriments pour 100g"
 
 
+class User_Favorites_Substitutes(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    user = models.ForeignKey(User, on_delete=True, related_name='user')
+    prod_base = models.ForeignKey(Products, on_delete=True, related_name='prod_base')
+    prod_substitute = models.ForeignKey(Products, on_delete=True, related_name='prod_substitute')
