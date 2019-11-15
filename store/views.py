@@ -1,19 +1,71 @@
-from django.shortcuts import render
-from django.http.response import HttpResponseRedirect
-from .forms import SearchForm
-from accounts import views as accounts_views
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.shortcuts import render, get_object_or_404
 
-# Create your views here.
+from .forms import SearchForm
+from .models import Products, Nutriments_for_100g
+from .product_search import ProductSearch
+
 
 def index(request):
     search_form = SearchForm()
+    return render(request, 'store/index.html', {'search_form': search_form})
 
-    context = {
-        'search_form':search_form,
-
-    }
-    return render(request, 'store/index.html', context)
 
 def products(request):
-    #form = search_form()
-    return render(request, 'store/products.html')#, {'form':form})
+    if request.method == 'POST':
+        search_form = SearchForm(request.POST)
+        if search_form.is_valid():
+            search = search_form.cleaned_data.get('search_product')
+            products_list = Products.objects.filter(product_name__icontains=search)
+            paginator = Paginator(products_list, 6)
+            page = request.GET.get('page')
+            try:
+                products_found = paginator.get_page(page)
+            except PageNotAnInteger:
+                # If page not an Integer then deliver first page.
+                products_found = paginator.get_page(1)
+            except EmptyPage:
+                # If page over the last result page, then deliver last result page.
+                products_found = paginator.get_page(paginator.num_pages)
+            context = {
+                'search': search,
+                'products_found': products_found,
+                'paginate': True
+            }
+
+            return render(request, 'store/products.html', context)
+    else:
+        search_form = SearchForm()
+        return render(request, 'store/products.html')
+
+
+def substitutes(request, product_id):
+    product = Products.objects.get(pk=product_id)
+    products_found = ProductSearch.found_substitutes(product.id)
+    paginator = Paginator(products_found, 9)
+    page = request.GET.get('page')
+    try:
+        products_found = paginator.page(page)
+    except PageNotAnInteger:
+        # If page not an Integer then deliver first page.
+        products_found = paginator.page(1)
+    except EmptyPage:
+        # If page over the last result page, then deliver last result page.
+        products_found = paginator.page(paginator.num_pages)
+    context = {
+        'product': product,
+        'products_found': products_found,
+        'paginate': True
+    }
+
+    return render(request, 'store/products.html', context)
+
+
+def details(request, product_id):
+    product_details = get_object_or_404(Products, pk=product_id)
+    nutriments = Nutriments_for_100g.objects.filter(product__id=product_id).order_by('name')
+    context = {
+        'product_details': product_details,
+        'nutriments': nutriments
+    }
+    return render(request, 'store/details.html', context)
