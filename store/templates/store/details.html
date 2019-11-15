@@ -1,0 +1,67 @@
+{% extends 'store/base.html' %}
+{% load static %}
+{% block title %}{{ product_details.product_name }}{% endblock %}
+
+{% block header_title %}{{ product_details.product_name }}{% endblock %}
+{% block content %}
+    <style type="text/css">
+        header.masthead{
+            height: 20px;
+            min-height: 0;
+            background-color: #000000;
+            background-position: center;
+            background-repeat:no-repeat;
+            background-image: url("{{ product_details.image_url }}");;
+        }
+        header.masthead h1{
+            font-size: 2.5rem;
+        }
+        h1.text-uppercase{
+            {#color: white;#}
+        }
+        hr{
+            visibility: hidden;
+        }
+    </style>
+<div class="products row justify-content-center">
+    <div class="card rounded  col-md-8 ">
+        <div class="card-body text-center" >
+            <div class="row card-title">
+                <div id="score" class="rounded col-6">
+                    <img class="img-responsive"
+                         src="{% get_static_prefix %}store/img/nutri/nutriscore-{{ product_details.nutrition_grade_fr }}.svg"
+                         alt="image nutri-score">
+                </div>
+                <div id="nova" class="rounded col-6">
+                    <img class="img-responsive "
+                         src="{% get_static_prefix %}store/img/nutri/nova-group-{{ product_details.nova_groups }}.svg"
+                         alt="image nova-group">
+                </div>
+            </div>
+            <div  class="row card-text col-md-12">
+                <div id="product_image" class="col-md-6">
+                    <img  src="{{ product_details.image_url }}" alt="image produit">
+                </div>
+                <div id="product_text" class="col-md-6 text-left">
+                    <h5><strong>Nom générique : </strong>{{ product_details.generic_name_fr }}</h5>
+                    <h5><strong>Marque : </strong>{{ product_details.brands }}</h5>
+                    <h5><strong>Référence : </strong>{{ product_details.id }}</h5>
+                    <h5><strong>Ingrédients : </strong>{{ product_details.ingredients_text_fr }}</h5>
+                </div>
+                <div class="row col-md-12 justify-content-center text-left" >
+                    <h5><strong>Repères nutritionnels pour 100 g : </strong>
+                        <ul id="repere">
+                            {% for nutriment in nutriments %}
+                                <li>{{ nutriment.name }} : {{ nutriment.quantity }} gr</li>
+                            {% endfor %}
+                        </ul>
+                    </h5>
+                </div>
+            </div>
+            <div class="card-header ">
+                <a target="_blank" href="{{ product_details.url }} " class="btn btn-primary">Voir la fiche d'Openfoodfacts</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
