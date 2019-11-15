@@ -43,8 +43,3 @@ class Nutriments_for_100g(models.Model):
         verbose_name = "Nutriments pour 100g"
 
 
-class Substitutes(models.Model):
-    id = models.BigAutoField(primary_key=True)
-    prod_base = models.ForeignKey(Products, on_delete=True, related_name='prod_base')
-    prod_substitute = models.ForeignKey(Products, on_delete=True, related_name='prod_substitute')
-

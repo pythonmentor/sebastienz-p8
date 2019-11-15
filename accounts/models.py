@@ -3,6 +3,7 @@ import re
 from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from store.models import Products
 
 
 class UserManager(BaseUserManager):
@@ -61,6 +62,9 @@ class User(AbstractUser):
     objects = UserManager()
 
 
-class Favorites(models.Model):
+class User_Favorites_Substitutes(models.Model):
     id = models.BigAutoField(primary_key=True)
-    substitutes_id = models.CharField(verbose_name='Non du nutriments', null=False, max_length=50)
+    user_id = models.ForeignKey(Products, on_delete=True, related_name='user_id')
+    prod_base_id = models.ForeignKey(Products, on_delete=True, related_name='prod_base_id')
+    prod_substitute_id = models.ForeignKey(Products, on_delete=True, related_name='prod_substitute_id')
+
