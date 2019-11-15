@@ -3,7 +3,7 @@ from django.conf import settings
 from django.core.management.base import BaseCommand
 from django.db import DataError
 
-from store.models import Categories, Products, Nutriments_for_100g, Substitutes
+from store.models import Categories, Products, Nutriments_for_100g, User_Favorites_Substitutes
 
 
 class Command(BaseCommand):
@@ -100,10 +100,7 @@ class Command(BaseCommand):
                         if categorie[:3].lower() == "fr:":
                             categorie = categorie.lstrip('fr').strip(':').strip(' ').capitalize()
                         if (len(categorie) > 2) and (categorie[:3].lower() != 'en:'):
-                            print(categorie)
                             cat_inst, created = Categories.objects.update_or_create(name=categorie)
-                            print(db_product.product_name)
-                            print(cat_inst)
                             db_product.categories.add(cat_inst)
 
                     db_product.categories.add(categorie_inst)
