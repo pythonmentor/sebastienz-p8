@@ -46,18 +46,20 @@ class Command(BaseCommand):
                        ]
 
         for product in products_data["products"]:
-            product_items = {}
-            # Check if all key in products and all values in products are not empty
-            if all(key in product for key in needed_data) and all(product.get(key) != '' for key in needed_data):
-                for key in needed_data:
-                    if key == "ingredients_text_fr":
-                        product_items[key] = product[key].replace('_', '').lstrip()
-                    elif key == "nutriments":
-                        product_items[key] = cls._filtered_nutriments(product[key])
-                    else:
-                        product_items[key] = product[key]
+            if "countries_lc" in product.keys():
+                if product["countries_lc"] == "fr":
+                    product_items = {}
+                    # Check if all key in products and all values in products are not empty
+                    if all(key in product for key in needed_data) and all(product.get(key) != '' for key in needed_data):
+                        for key in needed_data:
+                            if key == "ingredients_text_fr":
+                                product_items[key] = product[key].replace('_', '').lstrip()
+                            elif key == "nutriments":
+                                product_items[key] = cls._filtered_nutriments(product[key])
+                            else:
+                                product_items[key] = product[key]
 
-                products_list.append(product_items)
+                        products_list.append(product_items)
         return products_list
 
     @classmethod
