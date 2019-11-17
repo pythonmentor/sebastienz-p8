@@ -1,4 +1,4 @@
-from .models import Products
+from .models import Products, Categories
 
 
 class ProductSearch:
@@ -7,15 +7,17 @@ class ProductSearch:
     def found_substitutes(cls, product_id):
         # find product in DB
         product = Products.objects.get(pk=product_id)
+        #print(Categories.objects.filter(products_id=product.id))
         # find all products (substitutes) which are in same categories as initial product
         substitutes_ids_list = []
         dic = {}
         # List all substitutes in all common categories with better nutrition grade
         for cat in product.categories.all():
-            substitutes_ids_list.extend([prod.id for prod in Products.objects.filter(categories__name=cat).
-                                    filter(nutrition_grade_fr__lt=product.nutrition_grade_fr)])
+            substitutes_ids_list.extend([prod.id for prod in Products.objects.
+                                        filter(categories__name=cat).
+                                        filter(nutrition_grade_fr__lt=product.nutrition_grade_fr).order_by('nutrition_grade_fr')])
         # Put temporarily each unique substitutes ids from list in dic,
-        # with number of common instance with oder categories
+        # with number of common instance with other categories
         if len(substitutes_ids_list) > 0:
             for sub_id in substitutes_ids_list:
                 if sub_id not in dic:
@@ -28,4 +30,4 @@ class ProductSearch:
         SQL_clauses = ' '.join(['WHEN id=%s THEN %s' % (pk, i) for i, pk in enumerate(sorted_id_list)])
         ordering = 'CASE %s END' % SQL_clauses
         return Products.objects.filter(id__in=sorted_id_list[:6]).extra(
-           select={'ordering': ordering}, order_by=('ordering',))
+            select={'ordering': ordering}, order_by=('ordering',))
