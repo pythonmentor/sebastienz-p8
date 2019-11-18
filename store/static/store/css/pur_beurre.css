@@ -1,11 +1,12 @@
 header.masthead {
-    padding-top: 6rem;
-    padding-bottom: calc(10rem - 72px);
+    padding-top: 8rem;
+    padding-bottom: 2rem;
     background: linear-gradient(to bottom, rgba(92, 77, 66, 0.5) 0%, rgba(92, 77, 66, 0.5) 100%), url("../img/bg-food.jpeg");
     background-position: center;
     background-repeat: no-repeat;
     background-attachment: scroll;
     background-size: cover;
+    min-height: 100vh;
 }
 
 form label {
@@ -137,6 +138,59 @@ h1.text-uppercase{
 
 #mainNav.navbar-scrolled .navbar-brand {
   color: var(--courgetteclair);
+}
+
+#mainNav .search_form{
+    width: 30em;
+}
+
+#mainNav input.rounded{
+    background-color: lightgrey;
+    color: var(--obergine);
+}
+
+input#search_form{
+    color: var(--obergine);
+    background-color: #c3bcac;
+    height: 3rem;
+}
+
+input.button-courgette  {
+    height: 3rem;
+}
+
+.button-courgette {
+  color: var(--obergine);
+  background-color: var(--courgetteclair);
+  border-color: var(--courgetteclair);
+}
+
+.button-courgette:hover {
+  color: var(--petitbeurre);
+  background-color: var(--courgette);
+  border-color: var(--courgette);
+}
+
+.button-courgette:focus, .button-courgette.focus {
+  box-shadow: 0 0 0 0.2rem rgba(230, 139, 25, 0.5);
+}
+
+.button-courgette.disabled, .button-courgette:disabled {
+  color: #fff;
+  background-color: var(--courgetteclair);
+  border-color: var(--courgetteclair);
+}
+
+.button-courgette:not(:disabled):not(.disabled):active, .button-courgette:not(:disabled):not(.disabled).active,
+.show > .button-courgette.dropdown-toggle {
+  color: #fff;
+  background-color: var(--courgette);
+  border-color: var(--courgette);
+}
+
+.button-courgette:not(:disabled):not(.disabled):active:focus, .button-courgette:not(:disabled):not(.disabled).active:focus,
+.show > .button-courgette.dropdown-toggle:focus {
+  box-shadow: 0 0 0 0.2rem rgba(230, 139, 25, 0.5);
 }
 
 .btn-primary {

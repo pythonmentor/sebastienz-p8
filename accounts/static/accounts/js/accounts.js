@@ -1,21 +1,5 @@
 $(function(){
 
-    //************************** Resize masterhead ******************************************************************
-    function resize_masthead() {
-        var title = $(document).prop('title');
-        if (title !== "Pur Beurre - Accueil") {
-            $('.masthead').height($('form').height()+ $('.navbar').height()+ $('h1').height()+ $('footer').height());
-        }
-    }
-
-    $(window).resize(function(){
-        resize_masthead();
-    });
-
-    $(document).ready(function(){
-        resize_masthead();
-    });
-
     //****************** Toggle button for account edition mode ******************************************************
     $(function() {
         $('#edit-toggle').bootstrapToggle({

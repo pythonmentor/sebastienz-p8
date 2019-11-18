@@ -60,20 +60,21 @@
                     {% if forloop.counter|divisibleby:3 %}<div class="clearfix"></div>{% endif %}
                 {% endfor %}
             </div>
-            <div class="pagination justify-content-center">
+            <hr class="divider my-4 ">
+            <div class="pagination row justify-content-center">
                 {% if paginate %}
-                    <div class="page">
-                      <nav aria-label="...">
-                        <ul class="pager">
+                      <span class="">
                           {% if products_found.has_previous %}
-                              <li><a href="?page={{ products_found.previous_page_number }}">Page précédent</a></li>
+                              <a class="btn btn-primary rounded-pill" href="?page={{ products_found.previous_page_number }}"><< Page précédent </a>
                           {% endif %}
+                          <span class="text-petit-beurre-fonce">
+                            Page {{ products_found.number }} sur {{ products_found.paginator.num_pages }}.
+                          </span>
                           {% if products_found.has_next %}
-                              <li><a href="?page={{ products_found.next_page_number }}">Page suivante</a></li>
+                              <a class="btn btn-primary rounded-pill" href="?page={{ products_found.next_page_number }}">Page suivante >></a>
                           {% endif %}
-                        </ul>
-                      </nav>
-                    </div>
+                      </span>
+
                 {% endif %}
             </div>
         </div>
