@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.shortcuts import render, get_object_or_404
 
@@ -12,37 +13,44 @@ def index(request):
 
 
 def products(request):
+    search = ''
     if request.method == 'POST':
         search_form = SearchForm(request.POST)
         if search_form.is_valid():
             search = search_form.cleaned_data.get('search_product')
-            products_list = Products.objects.filter(product_name__icontains=search)
-            paginator = Paginator(products_list, 6)
-            page = request.GET.get('page')
-            try:
-                products_found = paginator.get_page(page)
-            except PageNotAnInteger:
-                # If page not an Integer then deliver first page.
-                products_found = paginator.get_page(1)
-            except EmptyPage:
-                # If page over the last result page, then deliver last result page.
-                products_found = paginator.get_page(paginator.num_pages)
-            context = {
-                'search': search,
-                'products_found': products_found,
-                'paginate': True
-            }
+            request.session['search'] = search
 
-            return render(request, 'store/products.html', context)
+    elif 'search' in request.session:
+        search = request.session['search']
+
     else:
         search_form = SearchForm()
         return render(request, 'store/products.html')
+
+    products_list = Products.objects.filter(product_name__icontains=search).order_by('-nutrition_grade_fr')
+    paginator = Paginator(products_list, 6)
+    page = request.GET.get('page')
+    try:
+        products_found = paginator.get_page(page)
+    except PageNotAnInteger:
+        # If page not an Integer then deliver first page.
+        products_found = paginator.get_page(1)
+    except EmptyPage:
+        # If page over the last result page, then deliver last result page.
+        products_found = paginator.get_page(paginator.num_pages)
+    context = {
+        'search': search,
+        'products_found': products_found,
+        'paginate': True
+    }
+
+    return render(request, 'store/products.html', context)
 
 
 def substitutes(request, product_id):
     product = Products.objects.get(pk=product_id)
     products_found = ProductSearch.found_substitutes(product.id)
-    paginator = Paginator(products_found, 9)
+    paginator = Paginator(products_found, 6)
     page = request.GET.get('page')
     try:
         products_found = paginator.page(page)
@@ -69,3 +77,4 @@ def details(request, product_id):
         'nutriments': nutriments
     }
     return render(request, 'store/details.html', context)
+
