@@ -68,7 +68,7 @@
           </li>
            {% if user.is_authenticated %}
               <li class="btn" id="myproducts">
-                <a class="icon-Carotte fa-2x mb-3" href="{#% url 'accounts:myproducts' %#}" title="Mes aliments"></a>
+                <a class="icon-Carotte fa-2x mb-3" href="{% url 'store:favorites_substitutes' %}" title="Mes aliments"></a>
               </li>
               <li class="btn" id="logout">
                 <a class="fas fa-sign-out-alt fa-2x mb-3" href="{% url 'accounts:logout' %}" title="Me déconnecter"></a>
