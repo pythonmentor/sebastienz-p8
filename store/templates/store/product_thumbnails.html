@@ -4,7 +4,7 @@
         <div class="row card-title">
             <div id="nova" class="rounded col-6">
                 <img class="img-responsive "
-                     src="{% get_static_prefix %}store/img/nutri/nova-group-{{ product.nova_groups }}.svg"
+                     src="{% get_static_prefix %}store/img/nutri/nova-group-{{product.nova_groups }}.svg"
                      alt="image nova-group">
             </div>
             <div id="score" class="rounded text-center col-6">
@@ -20,13 +20,17 @@
             <h5 class="">{{ product.product_name }}</h5>
             <div class="row">
                 {% if request.path == products_url %}
-                    <a class="fa fa-search fa-3x align-items-center offset-2 col-2" aria-hidden="true" href=" {% url 'store:substitutes' product.id %} " title="Trouver un substitut"></a>
+                    <a class="fa fa-search fa-3x align-items-center offset-2 col-2" aria-hidden="true"
+                       href=" {% url 'store:substitutes' product.id %} " title="Trouver un substitut"></a>
                 {% elif request.path == substitutes_url %}
-                    <a id="save{{ forloop.counter }}" data-sub_id="{{ product.id }}" class="save fa fa-floppy-o fa-3x align-items-center offset-2 col-2" aria-hidden="false" href="#" title="Enregistrer dans mes favoris"></a>
+                    <a class="save fa fa-floppy-o fa-3x align-items-center offset-2 col-2" aria-hidden="true"
+                       href=" {% url 'store:save_substitute' init_product.id product.id %} " title="Enregistrer dans mes favoris"></a>
                 {% else %}
-                    <a id="delete{{ forloop.counter }}" class="delete fa fa-trash-o fa-3x align-items-center offset-2 col-2" aria-hidden="true" href="#" title="Supprimer de mes favoris"></a>
+                    <a id="delete{{ forloop.counter }}" class="delete fa fa-trash-o fa-3x align-items-center offset-2 col-2" aria-hidden="true"
+                       href="{% url 'store:delete_favorite' prod sub %}" title="Supprimer de mes favoris"></a>
                 {% endif %}
-                <a class="fa fa-plus fa-3x align-items-center offset-3 col-2" aria-hidden="true" href=" {% url 'store:details' product.id %} " title="Voir les détails"></a>
+                <a class="fa fa-plus fa-3x align-items-center offset-3 col-2" aria-hidden="true"
+                   href=" {% url 'store:details' product.id %} " title="Voir les détails"></a>
             </div>
         </div>
     </div>
