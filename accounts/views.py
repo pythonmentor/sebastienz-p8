@@ -67,7 +67,3 @@ def user_account(request):
         account_form = AccountForm(instance=current_user)
         return render(request, 'accounts/myaccount.html', {'account_form': account_form})
 
-
-@login_required(login_url='accounts:login')
-def user_products(request):
-    pass
