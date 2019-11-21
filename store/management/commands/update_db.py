@@ -84,7 +84,6 @@ class Command(BaseCommand):
             categorie_inst, created = Categories.objects.update_or_create(name=cat)
             products_list = cls._search_api_data(cat)
             for product in products_list:
-                # if Products.objects.filter(id=product["id"]).exists() is False:
                 try:
                     db_product, created = Products.objects.update_or_create(id=product['id'], defaults={key: value
                                                                             for (key, value) in product.items()
