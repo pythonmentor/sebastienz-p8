@@ -1,8 +1,14 @@
 {% extends 'store/base.html' %}
 {% load static %}
-{% block title %}{{ product.product_name }}{% endblock %}
+{% block title %}{{ init_product.product_name }}{% endblock %}
 
-{% block header_title %}{% if product.product_name %}{{ product.product_name }}{% else %}Vous cherchez "{{ search }}"{% endif %}{% endblock %}
+{% block header_title %}
+    {% if init_product.product_name %}
+        {{ init_product.product_name }}
+    {% else %}
+        Vous cherchez "{{ search }}"
+    {% endif %}
+{% endblock %}
 {% block content %}
     <style type="text/css">
         header.masthead{
@@ -11,7 +17,7 @@
             background-color: #000000;
             background-position: center;
             background-repeat:no-repeat;
-            background-image: url("{{ product.image_url }}");
+            background-image: url("{{ init_product.image_url }}");
             background-size: cover;
         }
         header.masthead h1{
@@ -27,8 +33,8 @@
     </style>
 
     {% url 'store:products' as products_url %}
-    {% url 'store:substitutes' product.id as substitutes_url %}
-    {% url 'store:favorits' as favorits_url %}
+    {% url 'store:substitutes' init_product.id as substitutes_url %}
+    {% url 'store:favorites_substitutes' as favorites_url %}
 
     <div class="products">
         <div class="container">
