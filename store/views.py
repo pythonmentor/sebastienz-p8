@@ -48,6 +48,8 @@ def products(request):
         'products_found': products_found,
         'paginate': True
     }
+    messages.info(request, "Nous avons trouvé {0} produits de substitution dans les mêmes catégories."
+                  .format(len(products_list)))
 
     return render(request, 'store/products.html', context)
 
@@ -56,6 +58,8 @@ def substitutes(request, product_id):
     """Found and display substitutes for a product"""
     init_product = Products.objects.get(pk=product_id)
     products_found = ProductSearch.found_substitutes(init_product.id)
+    messages.info(request,"Nous avons trouvé {0} produits de substitution dans les mêmes catégories."
+                  .format(len(products_found)))
     paginator = Paginator(products_found, 6)
     page = request.GET.get('page')
     try:
@@ -89,17 +93,29 @@ def details(request, product_id):
 @login_required(login_url='accounts:login')
 def save_substitute(request, product_id, substitute_id):
     """Save a substitute to user favorites"""
-    # if request.user.is_authenticated:
-    user = User.objects.get(email=request.user)
-    product = Products.objects.get(pk=product_id)
-    substitute = Products.objects.get(pk=substitute_id)
-    User_Favorites_Substitutes.objects.update_or_create(prod_base=product, prod_substitute=substitute, user=user)
-    messages.success(request, 'Le substitut à été enregistré dans vos favoris')
-    return redirect('store:substitutes', product_id)
+    if request.user.is_authenticated:
+        user = User.objects.get(email=request.user)
+        product = Products.objects.get(pk=product_id)
+        substitute = Products.objects.get(pk=substitute_id)
+        favorite, created = User_Favorites_Substitutes.objects.update_or_create(prod_base=product,
+                                                                                prod_substitute=substitute,
+                                                                                user=user)
+        if created:
+            messages.success(request, 'Le produit " {0} " à été enregistré dans vos favoris !'.
+                            format(Products.objects.get(pk=substitute_id)))
+        else:
+            messages.warning(request, 'Le produit " {0} " existe déjà dans vos favoris !'.
+                             format(Products.objects.get(pk=substitute_id)))
+        return redirect('store:substitutes', product_id)
+    else:
+        messages.INFO(request, 'Vous devez vous enregister ou créer un compte pour sauvegarder un produit dans vos '
+                               'favoris')
+        return redirect('accounts:login')
 
 
 @login_required(login_url='accounts:login')
 def favorites_substitutes(request):
+    """Display user saved favorites substitutes"""
     favorites = User_Favorites_Substitutes.objects.filter(user=request.user)
     paginator = Paginator(favorites, 1)
     page = request.GET.get('page')
@@ -120,7 +136,11 @@ def favorites_substitutes(request):
 
 @login_required(login_url='accounts:login')
 def delete_favorite(request, product_id, substitute_id):
-    substitute = User_Favorites_Substitutes.objects.get(prod_base=product_id, prod_substitute=substitute_id, user=request.user)
+    """Delete a user saved substitutes"""
+    substitute = User_Favorites_Substitutes.objects.get(prod_base=product_id,
+                                                        prod_substitute=substitute_id, user=request.user)
     substitute.delete()
-    messages.success(request, 'Le substitut à été supprimé')
+    messages.success(request, 'Le substitut " {0} " à été supprimé de vos favoris !'.
+                     format(Products.objects.get(pk=substitute_id)))
+
     return redirect('store:favorites_substitutes')
