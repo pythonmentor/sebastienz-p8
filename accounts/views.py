@@ -19,6 +19,7 @@ def user_login(request):
             authenticate_user = authenticate(email=email, password=password)
             if authenticate_user is not None:
                 login(request, authenticate_user)
+                messages.success(request, "Vous êtes maintenant connecté à votre compte")
                 return HttpResponseRedirect('/')
             else:
                 messages.error(request, "Email ou mot de passe invalide !")
@@ -33,6 +34,7 @@ def user_login(request):
 
 def user_logout(request):
     logout(request)
+    messages.info(request, 'Vous êtes déconnecté !')
     return HttpResponseRedirect('/')
 
 
@@ -45,6 +47,7 @@ def user_register(request):
             password1 = register_form.cleaned_data.get('password1')
             authenticate_user = authenticate(email=email, password=password1)
             login(request, authenticate_user)
+            messages.success(request, "Votre compte à été créé avec succès et vous êtes connecté !")
             return HttpResponseRedirect('/')
         else:
             return render(request, 'accounts/register.html', {'register_form': register_form})
