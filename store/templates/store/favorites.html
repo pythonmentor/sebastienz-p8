@@ -41,6 +41,11 @@
                 {% if products_list|length_is:"0" %}
                     <h1 class="alert-danger">Vous n'avez enregistré aucun produit !</h1>
                 {% endif %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <p class="message offset-2 col-8 rounded alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">{{ message }}</p>
+                    {% endfor %}
+                {% endif %}
               </div>
             </div>
             <div class="row mx-auto">

@@ -14,7 +14,7 @@
         <form action="{% url 'accounts:login' %}" method="post">
         {% if messages %}
             {% for message in messages %}
-            <p class="errorlist">{{ message }}</p>
+            <p class="message rounded alert alert-danger">{{ message }}</p>
             {% endfor %}
         {% endif %}
         {% csrf_token %}

@@ -20,9 +20,9 @@
         {% csrf_token %}
         <p class="form-group">
             {% for field in account_form %}
-                <p class="">{{ field.label_tag }}{{ field }}</p>
+                <p class="rounded">{{ field.label_tag }}{{ field }}</p>
                 {% if field.errors %}
-                    <span class="error_message">{{ field.errors }}</span>
+                    <span class="message rounded alert alert-danger">{{ field.errors }}</span>
                 {% endif %}
             {% endfor %}
         </p>

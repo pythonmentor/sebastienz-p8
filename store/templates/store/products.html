@@ -57,6 +57,11 @@
                 {% else %}
                    <h3 class="text-uppercase text-white font-weight-bold">Vos produits favorits:</h3>
                 {% endif %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <p class="message offset-2 col-8 rounded alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">{{ message }}</p>
+                    {% endfor %}
+                {% endif %}
 
               </div>
             </div>
