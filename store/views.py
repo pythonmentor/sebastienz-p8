@@ -20,10 +20,14 @@ def products(request):
     """Search and display all product founded from user request"""
     search = ''
     if request.method == 'POST':
+        # if 'search' in request.session:
+        #     del(request.session['search'])
         search_form = SearchForm(request.POST)
         if search_form.is_valid():
             search = search_form.cleaned_data.get('search_product')
             request.session['search'] = search
+        else:
+            return HttpResponseRedirect(request.path_info)
 
     elif 'search' in request.session:
         search = request.session['search']
@@ -48,7 +52,7 @@ def products(request):
         'products_found': products_found,
         'paginate': True
     }
-    messages.info(request, "Nous avons trouvé {0} produits de substitution dans les mêmes catégories."
+    messages.info(request, "Nous avons trouvé {0} produits pour votre requête."
                   .format(len(products_list)))
 
     return render(request, 'store/products.html', context)
@@ -56,9 +60,9 @@ def products(request):
 
 def substitutes(request, product_id):
     """Found and display substitutes for a product"""
-    init_product = Products.objects.get(pk=product_id)
+    init_product = get_object_or_404(Products, pk=product_id)
     products_found = ProductSearch.found_substitutes(init_product.id)
-    messages.info(request,"Nous avons trouvé {0} produits de substitution dans les mêmes catégories."
+    messages.info(request, "Nous avons trouvé {0} produits de substitution dans les mêmes catégories."
                   .format(len(products_found)))
     paginator = Paginator(products_found, 6)
     page = request.GET.get('page')

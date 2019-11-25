@@ -63,6 +63,7 @@ def user_account(request):
         account_form = AccountForm(request.POST, instance=current_user)
         if account_form.is_valid():
             account_form.save()
+            messages.success(request, "Vos modifications ont été enregistées !")
             return HttpResponseRedirect(reverse('accounts:myaccount'))
         else:
             return render(request, 'accounts/myaccount.html', {'account_form': account_form})
