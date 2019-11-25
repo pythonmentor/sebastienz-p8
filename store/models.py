@@ -3,13 +3,16 @@ from accounts.models import User
 
 
 class Categories(models.Model):
+    """ Categories table"""
     name = models.CharField(verbose_name='catégorie', max_length=50)
 
     def __str__(self):
+        """ display name in shell"""
         return self.name
 
 
 class Products(models.Model):
+    """ Products table"""
     id = models.BigIntegerField(primary_key=True)
     categories = models.ManyToManyField(Categories, related_name="categories")
     substitutes = models.ManyToManyField('self', related_name='substitute', symmetrical=False,
@@ -25,6 +28,7 @@ class Products(models.Model):
     image_url = models.URLField(verbose_name="URL vers l'image du produit", max_length=255)
 
     def __str__(self):
+        """ display product_name in shell"""
         return self.product_name
 
     class META:
@@ -32,6 +36,7 @@ class Products(models.Model):
 
 
 class Nutriments_for_100g(models.Model):
+    """ Nutriments table"""
     id = models.BigAutoField(primary_key=True)
     product = models.ManyToManyField(Products, related_name="Produit")
     name = models.CharField(verbose_name='Non du nutriments', max_length=50)
@@ -45,7 +50,14 @@ class Nutriments_for_100g(models.Model):
 
 
 class User_Favorites_Substitutes(models.Model):
+    """ User saved substitutes table"""
     id = models.BigAutoField(primary_key=True)
     user = models.ForeignKey(User, on_delete=True, related_name='user')
     prod_base = models.ForeignKey(Products, on_delete=True, related_name='prod_base')
     prod_substitute = models.ForeignKey(Products, on_delete=True, related_name='prod_substitute')
+
+    class Meta:
+        """ Add unique constrain of all three keys"""
+        constraints = [
+            models.UniqueConstraint(fields=['user', 'prod_base', 'prod_substitute'], name='unique_user_prod_sub')
+        ]

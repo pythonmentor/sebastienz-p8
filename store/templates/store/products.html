@@ -1,8 +1,14 @@
 {% extends 'store/base.html' %}
 {% load static %}
-{% block title %}{{ product.product_name }}{% endblock %}
+{% block title %}{{ init_product.product_name }}{% endblock %}
 
-{% block header_title %}{% if product.product_name %}{{ product.product_name }}{% else %}Vous cherché "{{ search }}"{% endif %}{% endblock %}
+{% block header_title %}
+    {% if init_product.product_name %}
+        {{ init_product.product_name }}
+    {% else %}
+        Vous cherchez "{{ search }}"
+    {% endif %}
+{% endblock %}
 {% block content %}
     <style type="text/css">
         header.masthead{
@@ -11,7 +17,7 @@
             background-color: #000000;
             background-position: center;
             background-repeat:no-repeat;
-            background-image: url("{{ product.image_url }}");
+            background-image: url("{{ init_product.image_url }}");
             background-size: cover;
         }
         header.masthead h1{
@@ -27,54 +33,64 @@
     </style>
 
     {% url 'store:products' as products_url %}
-    {% url 'store:substitutes' product.id as substitutes_url %}
-    {% url 'store:favorits' as favorits_url %}
+    {% url 'store:substitutes' init_product.id as substitutes_url %}
+    {% url 'store:favorites_substitutes' as favorites_url %}
 
     <div class="products">
         <div class="container">
             <div class="row align-items-center text-center">
               <div class="col-lg-12 align-self">
-                {% if request.get_full_path == products_url %}
+                {% if request.path == products_url %}
                     {% if products_found|length_is:"0" %}
-                        <h1 class="alert-danger">Nous n'avons trouvé aucun résultat pour votre recherche !</h1>
-                        <h3 class="alert-info">Réessayé une nouvelle requette.</h3>
+                        <h2 class="offset-2 col-8 rounded alert-danger">Nous n'avons trouvé aucun résultat pour votre recherche !</h2>
+                        <h3 class="offset-2 col-8 rounded alert-info">Réessayé une nouvelle requête.</h3>
                     {% else %}
                         <h3 class="text-uppercase text-white font-weight-bold">Résultats de votre rechercher:</h3>
                     {% endif %}
-                {% elif request.get_full_path == substitutes_url %}
+                {% elif request.path == substitutes_url %}
                     {% if products_found|length_is:"0" %}
-                        <h1 class="alert-danger">Nous n'avons trouvé aucun substitut pour ce produit !</h1>
-                        <h3 class="alert-info">Le score nutritionnel n'est-il pas déjà correct ?</h3>
+                        <h2 class="offset-2 col-8 rounded alert-danger">Nous n'avons trouvé aucun substitut pour ce produit !</h2>
+                        <h3 class="offset-2 col-8 rounded alert-info">Le score nutritionnel n'est-il pas déjà correct ?</h3>
                     {% else %}
                         <h3 class="text-uppercase text-white font-weight-bold">Vous pouvez remplacer cet aliment par:</h3>
                     {% endif %}
                 {% else %}
                    <h3 class="text-uppercase text-white font-weight-bold">Vos produits favorits:</h3>
                 {% endif %}
-
+                <div id="message">
+                    {% if messages %}
+                        {% for message in messages %}
+                            <p class="message offset-2 col-8 rounded alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">{{ message }}</p>
+                        {% endfor %}
+                    {% endif %}
+                </div>
               </div>
             </div>
-            <div class="row justify-content-center ">
+            <div class="row mx-auto">
                 {% for product in products_found %}
                     {% include 'store/product_thumbnails.html' %}
                     {% if forloop.counter|divisibleby:3 %}<div class="clearfix"></div>{% endif %}
                 {% endfor %}
             </div>
+            <hr class="divider my-4 ">
+            <div class="pagination row justify-content-center">
+                {% if paginate %}
+                      <span class="">
+                          {% if products_found.has_previous %}
+                              <a class="btn btn-primary rounded-pill" href="?page={{ products_found.previous_page_number }}"><< Page précédent </a>
+                          {% endif %}
+                          <span class="text-petit-beurre-fonce">
+                            Page {{ products_found.number }} sur {{ products_found.paginator.num_pages }}.
+                          </span>
+                          {% if products_found.has_next %}
+                              <a class="btn btn-primary rounded-pill" href="?page={{ products_found.next_page_number }}">Page suivante >></a>
+                          {% endif %}
+                      </span>
+
+                {% endif %}
+            </div>
         </div>
-        {% if paginate %}
-            <hr class="divider ">
-          <div class="clearfix"></div>
-          <nav aria-label="...">
-            <ul class="pager">
-              {% if products_found.has_previous %}
-                  <li><a href="?page={{ products_found.previous_page_number }}">Page précédent</a></li>
-              {% endif %}
-              {% if products_found.has_next %}
-                  <li><a href="?page={{ products_found.next_page_number }}">Page suivante</a></li>
-              {% endif %}
-            </ul>
-          </nav>
-        {% endif %}
+
 
     </div>
 {% endblock %}

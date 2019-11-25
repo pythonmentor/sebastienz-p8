@@ -1,0 +1,80 @@
+{% extends 'store/base.html' %}
+{% load static %}
+{% block title %}{{ products_list.0.prod_base }}{% endblock %}
+
+{% block header_title %}
+    {% if products_list.0.prod_base %}
+        {{ products_list.0.prod_base }}
+    {% else %}
+        Favoris vide !
+    {% endif %}
+{% endblock %}
+{% block content %}
+    <style type="text/css">
+        header.masthead{
+            height: 0;
+            min-height: 0;
+            background-color: #000000;
+            background-position: center;
+            background-repeat:no-repeat;
+            background-image: url("{{ products_list.0.prod_base.image_url }}");
+            background-size: cover;
+        }
+        header.masthead h1{
+            font-size: 2.5rem;
+        }
+        h1.text-uppercase{
+            {#color: white;#}
+        }
+        hr{
+            visibility: hidden;
+        }
+
+    </style>
+
+    {% url 'store:favorites_substitutes' as favorites_url %}
+
+    <div class="products">
+        <div class="container">
+            <div class="row align-items-center text-center">
+              <div class="col-lg-12 align-self">
+                {% if products_list|length_is:"0" %}
+                    <h2 class="offset-2 col-8 rounded alert-danger">Vous n'avez aucun produit enregistré!</h2>
+                {% endif %}
+              </div>
+              <div id="message" class="col-lg-12 align-self">
+                 {% if messages %}
+                    {% for message in messages %}
+                        <p class="message offset-2 col-8 rounded alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">{{ message }}</p>
+                    {% endfor %}
+                {% endif %}
+              </div>
+            </div>
+            <div class="row mx-auto">
+                {% for product in products_list %}
+                    {% include 'store/product_thumbnails.html' with product=product.prod_base prod=product.prod_base.id sub=product.prod_substitute.id %}
+                    <h4 class="text-white text-shadow">Remplacé par</h4>
+                    {% include 'store/product_thumbnails.html' with product=product.prod_substitute prod=product.prod_base.id sub=product.prod_substitute.id %}
+                    {% if forloop.counter|divisibleby:3 %}<div class="clearfix"></div>{% endif %}
+                {% endfor %}
+            </div>
+            <hr class="divider my-4 ">
+            <div class="pagination row justify-content-center">
+                {% if paginate %}
+                      <span class="">
+                          {% if products_list.has_previous %}
+                              <a class="btn btn-primary rounded-pill" href="?page={{ products_list.previous_page_number }}"><< Page précédent </a>
+                          {% endif %}
+                          <span class="text-petit-beurre-fonce">
+                            Page {{ products_list.number }} sur {{ products_list.paginator.num_pages }}.
+                          </span>
+                          {% if products_list.has_next %}
+                              <a class="btn btn-primary rounded-pill" href="?page={{ products_list.next_page_number }}">Page suivante >></a>
+                          {% endif %}
+                      </span>
+
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

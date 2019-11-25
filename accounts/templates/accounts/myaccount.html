@@ -14,15 +14,22 @@
 {% endblock %}
 
 {% block header_content %}
+    <div id="message">
+        {% if messages %}
+            {% for message in messages %}
+                <p class="message offset-3 col-6 rounded alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+    </div>
     <div><span class="text-obergine">Edition du profile : </span><span id="edition"><input  class="text-white" type="checkbox" id="edit-toggle"></span></div>
     <div id="account" class="col-sm-6 offset-sm-3 align-center text-left text-white ">
         <form action="{#% url 'accounts:register' %#}" method="POST">
         {% csrf_token %}
         <p class="form-group">
             {% for field in account_form %}
-                <p class="">{{ field.label_tag }}{{ field }}</p>
+                <p class="rounded">{{ field.label_tag }}{{ field }}</p>
                 {% if field.errors %}
-                    <span class="error_message">{{ field.errors }}</span>
+                    <span class="rounded alert alert-danger">{{ field.errors }}</span>
                 {% endif %}
             {% endfor %}
         </p>

@@ -50,6 +50,7 @@ class User(AbstractUser):
         return self.email
 
     def formated_email(self):
+        """ return the fist word from email"""
         regex = r"\w+"
         return re.findall(regex, self.email)[0]
 
