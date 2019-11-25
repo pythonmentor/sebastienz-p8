@@ -1,11 +1,13 @@
 {% extends 'store/base.html' %}
 {% load static %}
 {% block header_content %}
+    <div id="message">
     {% if messages %}
         {% for message in messages %}
             <p class="message offset-2 col-8 rounded alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">{{ message }}</p>
         {% endfor %}
     {% endif %}
+    </div>
     <h2 class="text-white-75 text-shadow font-weight-light mb-5">Trouvez un produit de substitution pour ceux que vous consommez tous les jours !</h2>
     <div class="col-lg-8 offset-lg-2 align-self-baseline">
       {% include 'store/search_form.html' %}

@@ -12,11 +12,13 @@
     </style>
     <div class="col-md-4 offset-md-4 align-center text-left text-white">
         <form action="{% url 'accounts:login' %}" method="post">
-        {% if messages %}
-            {% for message in messages %}
-            <p class="message rounded alert alert-danger">{{ message }}</p>
-            {% endfor %}
-        {% endif %}
+        <div id="message">
+            {% if messages %}
+                {% for message in messages %}
+                <p class="message rounded alert alert-danger">{{ message }}</p>
+                {% endfor %}
+            {% endif %}
+        </div>
         {% csrf_token %}
         {{ login_form.as_p }}
         <br>

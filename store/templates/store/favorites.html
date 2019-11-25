@@ -39,9 +39,11 @@
             <div class="row align-items-center text-center">
               <div class="col-lg-12 align-self">
                 {% if products_list|length_is:"0" %}
-                    <h1 class="alert-danger">Vous n'avez enregistré aucun produit !</h1>
+                    <h2 class="offset-2 col-8 rounded alert-danger">Vous n'avez aucun produit enregistré!</h2>
                 {% endif %}
-                {% if messages %}
+              </div>
+              <div id="message" class="col-lg-12 align-self">
+                 {% if messages %}
                     {% for message in messages %}
                         <p class="message offset-2 col-8 rounded alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">{{ message }}</p>
                     {% endfor %}
