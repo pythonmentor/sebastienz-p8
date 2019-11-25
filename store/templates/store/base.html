@@ -48,7 +48,7 @@
           <li class="search_form">
               <form action="{% url 'store:products' %}" method="post">
                 {% csrf_token %}
-                <input class='rounded' type="text" name="search_product" placeholder="Produit">
+                <input class='rounded' type="text" name="search_product" placeholder="Produit" minlength=2>
                 <input class='rounded' type="submit" value="Chercher">
               </form>
           </li>
