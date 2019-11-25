@@ -462,6 +462,10 @@ ul#repere li:nth-child(4) {
   order: 3;
 }
 
+#message {
+    min-height: 4rem;
+}
+
 
 
 
