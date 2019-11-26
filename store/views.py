@@ -106,15 +106,11 @@ def save_substitute(request, product_id, substitute_id):
                                                                                 user=user)
         if created:
             messages.success(request, 'Le produit " {0} " à été enregistré dans vos favoris !'.
-                            format(Products.objects.get(pk=substitute_id)))
+                             format(Products.objects.get(pk=substitute_id)))
         else:
             messages.warning(request, 'Le produit " {0} " existe déjà dans vos favoris !'.
                              format(Products.objects.get(pk=substitute_id)))
         return redirect('store:substitutes', product_id)
-    else:
-        messages.INFO(request, 'Vous devez vous enregister ou créer un compte pour sauvegarder un produit dans vos '
-                               'favoris')
-        return redirect('accounts:login')
 
 
 @login_required(login_url='accounts:login')
@@ -137,6 +133,7 @@ def favorites_substitutes(request):
         'paginate': True
     }
     return render(request, 'store/favorites.html', context)
+
 
 @login_required(login_url='accounts:login')
 def delete_favorite(request, product_id, substitute_id):
