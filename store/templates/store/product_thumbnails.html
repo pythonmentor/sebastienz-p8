@@ -23,9 +23,9 @@
                     <a class="fa fa-search fa-3x align-items-center offset-2 col-2" aria-hidden="true"
                        href=" {% url 'store:substitutes' product.id %} " title="Trouver un substitut"></a>
                 {% elif request.path == substitutes_url %}
-                    <a class="save disabled fa fa-floppy-o fa-3x align-items-center offset-2 col-2" aria-hidden="true"
+                    <a class="save fa fa-floppy-o fa-3x align-items-center offset-2 col-2" aria-hidden="true"
                        {% if user.is_authenticated %}
-                           href="{% url 'store:save_substitute' init_product.id product.id %}" class ="active"
+                           href="{% url 'store:save_substitute' init_product.id product.id %}"
                             title="Enregistrer dans mes favoris"
                        {% else %}
                            title="Vous devez vous enregister pour accéder à cette fonctionnalité"
