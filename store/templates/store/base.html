@@ -44,8 +44,8 @@
       </button>
 
       <div class="collapse navbar-collapse" id="navbarResponsive">
-        <ul class="navbar-nav navbar-right text-right ml-auto my-2 my-lg-0 float-right ">
-          <li class="search_form">
+        <ul class="navbar-nav navbar-right text-center ml-auto my-2 ">
+          <li class="col- 6 search_form">
               <form action="{% url 'store:products' %}" method="post">
                 {% csrf_token %}
                 <input class='rounded' type="text" name="search_product" placeholder="Produit" minlength=2>
