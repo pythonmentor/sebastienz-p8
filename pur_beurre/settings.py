@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if os.environ.get('ENV') == 'PRODUCTION':
     DEBUG = False
     SECRET_KEY = os.environ.get("SECRET_KEY")
-    ALLOWED_HOSTS = ['pur_beurre-2019.herokuapp.com']
+    ALLOWED_HOSTS = ['purbeurre-2019.herokuapp.com']
 else:
     DEBUG = True
     # SECURITY WARNING: keep the secret key used in production secret!
