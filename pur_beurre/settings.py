@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+if os.environ.get('ENV') == 'PRODUCTION':
+    import django_heroku
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -18,15 +20,15 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'k7xw2@*qbefmo!b52341e3@s$om&r+i^pd7389qz!@48k7jg#h'
-
 # SECURITY WARNING: don't run with debug turned on in production!
 if os.environ.get('ENV') == 'PRODUCTION':
     DEBUG = False
+    SECRET_KEY = os.environ.get("SECRET_KEY")
     ALLOWED_HOSTS = ['pur_beurre-2019.herokuapp.com']
 else:
     DEBUG = True
+    # SECURITY WARNING: keep the secret key used in production secret!
+    SECRET_KEY = 'k7xw2@*qbefmo!b52341e3@s$om&r+i^pd7389qz!@48k7jg#h'
     ALLOWED_HOSTS = ['127.0.0.1']
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
@@ -143,4 +145,8 @@ CATEGORIES = [
     "Desserts",
     "Fromages"
 ]
+
+if os.environ.get('ENV') == 'PRODUCTION':
+    # Activate Django-Heroku.
+    django_heroku.settings(locals())
 
