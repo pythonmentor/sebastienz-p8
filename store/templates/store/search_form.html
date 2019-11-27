@@ -1,5 +1,12 @@
+
 <form action="{% url 'store:products' %}" method="post">
+<div class="input-group">
 {% csrf_token %}
 {{ search_form }}
-<input class='button-courgette rounded' type="submit" value="Chercher">
+    <div class="input-group-append">
+        <button class="btn button-obergine rounded-right" type="submit">
+                <i class="fa fa-search"></i>
+        </button>
+    </div>
+</div>
 </form>

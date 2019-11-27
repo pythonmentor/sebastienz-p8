@@ -149,10 +149,18 @@ h1.text-uppercase{
     color: var(--obergine);
 }
 
+#mainNav input.rounded:focus{
+    box-shadow: 0px 1px 1px rgb(23, 14, 26) inset, 0px 0px 8px rgb(217, 238, 0);
+}
+
 input#search_form{
     color: var(--obergine);
-    background-color: #c3bcac;
     height: 3rem;
+}
+
+.form-control:focus{
+    border-color: var(--obergine);
+    box-shadow: 0px 1px 1px rgb(23, 14, 26) inset, 0px 0px 8px rgb(217, 238, 0);
 }
 
 input.button-courgette  {
@@ -173,6 +181,7 @@ input.button-courgette  {
 
 .button-courgette:focus, .button-courgette.focus {
   box-shadow: 0 0 0 0.2rem rgba(230, 139, 25, 0.5);
+    border-color: #170e1a;
 }
 
 .button-courgette.disabled, .button-courgette:disabled {
@@ -186,6 +195,36 @@ input.button-courgette  {
   color: #fff;
   background-color: var(--courgette);
   border-color: var(--courgette);
+}
+
+.button-obergine {
+  color: #ffff;
+  background-color: var(--obergine);
+  border-color: var(--obergine);
+}
+
+.button-obergine:hover {
+  color: var(--petitbeurre);
+  background-color: var(--obergine);
+  border-color: var(--obergine);
+}
+
+.button-obergine:focus, .button-obergine.focus {
+  box-shadow: 0 0 0 0.2rem rgba(230, 139, 25, 0.5);
+    border-color: #170e1a;
+}
+
+.button-obergine.disabled, .button-obergine:disabled {
+  color: #fff;
+  background-color: var(--petitbeurrefonce);
+  border-color: var(--petitbeurrefonce);
+}
+
+.button-obergine:not(:disabled):not(.disabled):active, .button-obergine:not(:disabled):not(.disabled).active,
+.show > .button-obergine.dropdown-toggle {
+  color: #fff;
+  background-color: var(--obergine);
+  border-color: var(--obergine);
 }
 
 .button-courgette:not(:disabled):not(.disabled):active:focus, .button-courgette:not(:disabled):not(.disabled).active:focus,

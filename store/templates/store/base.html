@@ -36,7 +36,7 @@
 <body id="page-top">
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top py-2" id="mainNav">
-    <div class="container">
+    <div class="container col-12">
       <a href="/"><img id="logo" class="img-responsive" src="{% static 'store/img/logo_pur_beurre.png' %}" alt="logo_pur_beurre"></a>
       <a class="navbar-brand js-scroll-trigger" href="/">Pur Beurre</a>
       <button class="navbar-toggler navbar-toggler-right custom-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -44,12 +44,11 @@
       </button>
 
       <div class="collapse navbar-collapse" id="navbarResponsive">
-        <ul class="navbar-nav navbar-right text-center ml-auto my-2 ">
-          <li class="col- 6 search_form">
+        <ul class="btn-goup navbar-nav navbar-right text-center ml-auto my-2 ">
+          <li class="search_form">
               <form action="{% url 'store:products' %}" method="post">
                 {% csrf_token %}
-                <input class='rounded' type="text" name="search_product" placeholder="Produit" minlength=2>
-                <input class='rounded' type="submit" value="Chercher">
+                <input class='rounded float-right' type="text" name="search_product" placeholder="Rechercher" minlength=2>
               </form>
           </li>
           <li class="btn" id="myaccount">
