@@ -1,0 +1,10 @@
+{% extends 'store/base.html' %}
+{% load static %}
+{% block title %}Erreur 500{% endblock %}
+{% block header_title %}Oups !! Une erreur du serveur est survenue{% endblock %}
+{% block header_content %}
+    <Div class="row justify-content-center text-white">
+        <h2 class="text-shadow font-weight-light mb-5"><a href="{% url 'store:index' %}">Retour à l'accueil</a></h2>
+    </Div>
+
+{% endblock %}
