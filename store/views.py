@@ -145,3 +145,9 @@ def delete_favorite(request, product_id, substitute_id):
                      format(Products.objects.get(pk=substitute_id)))
 
     return redirect('store:favorites_substitutes')
+
+
+def mentions_legal(request):
+    """Display legal information page"""
+    search_form = SearchForm()
+    return render(request, 'store/mentions_legal.html')
