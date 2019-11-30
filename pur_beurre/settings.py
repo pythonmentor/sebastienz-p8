@@ -133,16 +133,23 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'accounts/static/'),
+    os.path.join(BASE_DIR, 'store/static/'),
+]
+
+INTERNAL_IPS = ['127.0.0.1']
+
 if os.environ.get('ENV') == 'PRODUCTION':
 
     # Static files settings
-    PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
+    BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-    STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
     # Extra places for collectstatic to find static files.
     STATICFILES_DIRS = (
-        os.path.join(PROJECT_ROOT, 'static'),
+        os.path.join(BASE_DIR, 'static'),
     )
 
     # Simplified static file serving.
@@ -151,12 +158,6 @@ if os.environ.get('ENV') == 'PRODUCTION':
 
     db_from_env = dj_database_url.config(conn_max_age = 500)
     DATABASES['default'].update(db_from_env)
-
-else:
-    STATICFILES_DIRS = [
-        os.path.join(BASE_DIR, 'accounts/static/'),
-        os.path.join(BASE_DIR, 'store/static/'),
-    ]
 
 # Openfoofacts search catégories
 CATEGORIES = [
