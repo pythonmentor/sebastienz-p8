@@ -13,5 +13,5 @@ urlpatterns = [
     path('<int:product_id>/<int:substitute_id>/', views.save_substitute, name='save_substitute'),
     path('favorites/', views.favorites_substitutes, name='favorites_substitutes'),
     path('favorites/<int:product_id>/<int:substitute_id>/', views.delete_favorite, name='delete_favorite'),
-    path('mentions_legal/', views.mentions_legal, name='mentions_legal'),
+    path('legal-informations/', views.legal_informations, name='legal_informations'),
 ]
