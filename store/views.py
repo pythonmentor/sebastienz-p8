@@ -147,7 +147,7 @@ def delete_favorite(request, product_id, substitute_id):
     return redirect('store:favorites_substitutes')
 
 
-def mentions_legal(request):
+def legal_informations(request):
     """Display legal information page"""
     search_form = SearchForm()
-    return render(request, 'store/mentions_legal.html')
+    return render(request, 'store/legal_informations.html')
