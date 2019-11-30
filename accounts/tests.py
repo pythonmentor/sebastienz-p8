@@ -63,7 +63,6 @@ class LogoutPageTestCase(TestCase):
         # Test if user is logged in after login
         user = get_user(client)
         self.assertFalse(user.is_anonymous)
-        print(user.email)
         # Call logout page
         response = client.get(reverse('accounts:logout'))
         # Test if user is unlogged after call logout page
