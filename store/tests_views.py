@@ -210,3 +210,10 @@ class DeleteSubstituteTestCase(TestCase):
 
         self.assertEqual(len(User_Favorites_Substitutes.objects.filter(prod_base=self.product.id, prod_substitute=self.
                                                                        substitute.id)), 0)
+
+class LegalInformationPageTestCase(TestCase):
+    def test_display_legal_informations_page(self):
+        # Call index page
+        response = self.client.get('/')
+        # Test if page is found
+        self.assertEqual(response.status_code, 200)
